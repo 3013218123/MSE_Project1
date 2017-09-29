@@ -1,0 +1,75 @@
+﻿用户名：
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+
+建立仓库：
+初始化一个Git仓库，使用git init命令。
+
+添加文件到Git仓库，分两步：
+第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；
+第二步，使用命令git commit，完成。
+
+查看状态：
+要随时掌握工作区的状态，使用git status命令。
+如果git status告诉你有文件被修改过，用git diff可以查看修改内容（add前使用）。
+
+版本穿梭：
+HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
+穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
+要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+
+用git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别
+
+撤销修改：
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+
+删除文件：
+命令git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。
+
+建立SSH密匙：
+ssh-keygen -t rsa -C "youremail@example.com" 一路回车即可。在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。公钥可以用来和github连接。
+
+连接远程版本库（github）：
+要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；eg:git remote add origin git@github.com:username/repositoryName.git
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+
+从远程版本库克隆：
+要克隆一个仓库，首先必须知道仓库的地址，然后使用git clone命令克隆。eg: git clone git@github.com:username/repositoryName.git
+Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快。
+
+分支操作：
+Git鼓励大量使用分支：
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+分支可能与冲突：比如master 和 dev分支都修改1个地方 需要解决冲突才行。当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。用git log --graph命令可以看到分支合并图。
+查看分支合并图：git log --graph --pretty=oneline --abbrev-commit
+直接 merge 自动使用Fast forward 模式，只是改了指针，非常快。但是，删除分支后，会丢掉分支信息。可以用普通模式合并 比如合并dev分支命令为： git merge --no-ff -m "merge with no-ff" dev 这种合并要创建一个新的commit，所以加上-m参数，写上commit描述 加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并
+
+修复bug:
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并(普通合并)，最后删除；
+当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop（也可以分两步1.git stash apply恢复，但是stash不删除，再用git stash drop删除），回到工作现场
+
+强行删除分支：
+如果分支没有被合并 git branch -d 分支名 会删除失败 可以用git branch -D 分支名强行删除
+
+查看远程仓库信息：
+git remote返回远程仓库名  git remote -v 更详细一点，会有origin地址
+推送分支： git push origin master          git push origin dev(master分支是主分支，因此要时刻与远程同步；dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发)
+
+标签：
+git tag labelName为当前版本创造一个标签 git tag labelName commitId 可以为对应commitId创建标签
+git tag 查看所有标签
+git show labelName 查看当前标签的详细信息。
+-a指定标签名 -m 说明文字 eg:$ git tag -a v0.1 -m "version 0.1 released" 3628164
+-s 加密 需要安装gpg
+命令git push origin <tagname>可以推送一个本地标签；
+命令git push origin --tags可以推送全部未推送过的本地标签；
+命令git tag -d <tagname>可以删除一个本地标签；
+命令git push origin :refs/tags/<tagname>可以删除一个远程标签。
