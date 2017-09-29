@@ -1,0 +1,51 @@
+
+import java.util.Scanner;
+
+public class Main {
+	 public static int n,t;
+	 public static int num[];
+	 
+	 public static void main(String[] args)
+	 {
+	     Scanner scan = new Scanner(System.in);
+	     n=scan.nextInt();
+	     t=scan.nextInt();
+	     num=new int [n];
+	     int sum=0;
+	     int mx=0;
+	     int pos=-1;
+	     for(int i=0;i<n;i++)
+	     {
+	    	 num[i]=scan.nextInt();
+	    	 if(num[i]>mx)
+	    	 {
+	    		 pos=i;
+	    		 mx=num[i];
+	    	 }
+	    	 sum+=num[i];
+	     }
+	     if(sum<=t)
+	     {
+	    	 System.out.println(sum);
+	     }
+	     else
+	     {
+	    	 num[pos]=0;
+	    	 int dp[] = new int [t+1];
+	    	 for(int i=0;i<n;i++)
+	    	 {
+	    		 for(int j=t;j>=num[i];j--)
+	    		 {
+	    			 if(dp[j-num[i]]+num[i]>dp[j])
+	    			 {
+	    				 dp[j]=dp[j-num[i]]+num[i];
+	    			 }
+	    		 }
+	    	 }
+	    	 int ans=Math.max(dp[t], dp[t-1]+mx);
+	    	 System.out.println(ans);
+	     }
+	     
+	 }
+
+}
