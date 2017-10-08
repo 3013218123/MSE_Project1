@@ -1,7 +1,10 @@
 <center> <font size=6>**"CANTOOL"项目需求文档**</font> </center>
 ##1 引言
 ###1.1 背景
-	
+	在现代汽车控制技术中，汽车中会使用多个电子控制装置（ECU：Electronic Control Unit）对整车进行控制。
+	ECU之间的信息交换更多地依赖于CAN(Controller Area Network)总线的网络连接方式来完成。
+	为了检测和控制CAN bus的信息内容，需要使用CAN bus检测设备。
+	CanTool装置是完成CANbus检测的工具。
 ###1.2 目的
 	
 ##2 功能需求
