@@ -24,6 +24,9 @@
 <center> ![Alt text](12.png)</center>
 
 <center>图 1 设定模块UseCase</center>
+	
+ 
+	设定模块主要包含：COM口的设定、CANtool设定、CAN总线参数设定。
 
 
 ###2.2 数据存储模块
