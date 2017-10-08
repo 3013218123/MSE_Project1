@@ -41,4 +41,8 @@
 
 
 ###2.3 数据接收（发送）模块
+<center> ![Alt text](3.png)</center>
+
+<center>图 2 数据接收（发送）模块UseCase</center>
+
 
