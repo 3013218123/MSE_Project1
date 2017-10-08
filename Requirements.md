@@ -30,7 +30,12 @@
 1.	COM设定
 
 	COM设定主要实现以下功能。第一：系统可以自动搜索到本机可以使用的COM口，并以列表的方式显示；第二：选择某一COM口，系统弹出基本信息设定的输入界面，界面可以设置COM口波特率115200、设置数据位数8、设置停止位数1。
+2.	CANTool设定
 
+	CANtool设定主要完成：装置的CAN速率设置、进入CAN工作状态（Open）、进入CAN初始化状态（Close）。
+3.	CAN总线通信参数设定
+
+	CanToolApp可以设定CAN总线的通信参数，并通过相应的命令设置CanTool装置的CAN通信参数，以使CanTool装置能够与CAN总线上的其他被测ECU进行正常的通信。
 
 ###2.2 数据存储模块
 <center> ![Alt text](2.png)</center>
