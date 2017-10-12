@@ -14,7 +14,7 @@
         <EditText
             android:layout_gravity="center"
             android:gravity="center"
-            android:id="@+id/editText3"
+            android:id="@+id/testEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,7 +23,7 @@
             android:hint="输入待解析字符串"/>
         <Button
 
-            android:id="@+id/button5"
+            android:id="@+id/testButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,8 +37,23 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
 
+        <TextView
+            android:gravity="center"
+            android:id="@+id/textViewqueryResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="显示查询结果" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/textViewAnalysisResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="显示查询结果" />
     </LinearLayout>
 </LinearLayout>
