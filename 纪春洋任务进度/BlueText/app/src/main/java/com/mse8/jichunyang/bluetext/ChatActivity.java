@@ -30,15 +30,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-/**
+/*
  * 会话界面
- *
- * @Project App_Bluetooth
- * @Package com.android.bluetooth
- * @author chenlin
- * @version 1.0
- * @Date 2013年3月2日
- * @Note TODO
  */
 public class ChatActivity extends Activity implements OnItemClickListener, OnClickListener {
     private static final int STATUS_CONNECT = 0x11;

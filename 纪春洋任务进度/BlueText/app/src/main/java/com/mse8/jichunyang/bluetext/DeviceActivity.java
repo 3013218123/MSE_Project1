@@ -23,14 +23,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-/**
+/*
  * 发现的设备列表
- * @Project    App_Bluetooth
- * @Package    com.android.bluetooth
- * @author     chenlin
- * @version    1.0
- * @Date       2013年6月2日
- * @Note       TODO
  */
 public class DeviceActivity extends Activity {
     private ListView mListView;

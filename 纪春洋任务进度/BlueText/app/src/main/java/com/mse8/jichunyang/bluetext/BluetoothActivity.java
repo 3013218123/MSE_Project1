@@ -8,14 +8,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 
-/**
+/*
  * 主页
- *
- * @Project App_Bluetooth
- * @Package com.android.bluetooth
- * @author chenlin
- * @version 1.0
- * @Date 2013年6月2日
  */
 @SuppressWarnings("deprecation")
 public class BluetoothActivity extends TabActivity {
@@ -32,7 +26,7 @@ public class BluetoothActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mian );
+        setContentView(R.layout.main);
 
         initTab();
     }
