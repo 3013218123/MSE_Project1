@@ -62,6 +62,20 @@ public class Initial {
 		 for(int i=0;i<SG_length;i++) {
 			 System.out.println(SG_name[i]+" 物理值："+SG_phy[i]+" 范围："+SG_phy_min[i]+" "+SG_phy_max[i]+" 单位："+SG_unit[i]);
 		 }
+		 
+		 //反向解析 用户选择can信息后，首先返回需要输入的物理值的个数 
+		 //用户还需要知道每个物理值的输入范围
+		 double minMax[]=minMaxOfSG("100","D:/eclipseEE/eclipse-workspace/CANTool/src/db0.txt");
+		 int sLength=minMax.length/2;//需要输入的物理值的个数
+		 for(int k=0;k<minMax.length;k++) {
+			 System.out.println(minMax[k]); //数组前sLength位是下界，后sLength位是上界
+		 }
+		//假设用户输入物理值，传入一个double数组,针对canId100
+		 double userInputPhy[]=new double[] {254,653.31,65484,0,52,65484};
+		
+		 
+		 
+		 
 	}
 	public static ArrayList<String> txt2String(File file,String id){
 		ArrayList<String> SG_list = new ArrayList<>(); 
@@ -166,6 +180,52 @@ public class Initial {
 			tmp.append(Integer.toHexString(iTmp));
 		}
 		return tmp.toString();
+	}
+	
+	public static double[] minMaxOfSG(String canId,String fileLocation) {
+		File file = new File(fileLocation);
+		ArrayList<String> SG_list=txt2String(file,canId);
+		int SG_length=SG_list.size();
+		double SG_phy_minmax[]=new double[SG_length*2];//保存物理值下界
+		int index=0;
+		for(String str:SG_list) {
+			String[] sArray=str.split(" "); 
+			String minMaxStr=sArray[6].substring(1, sArray[6].length()-1);
+			String[] minMaxArray=minMaxStr.split("\\|");
+			SG_phy_minmax[index]=Double.parseDouble(minMaxArray[0]);
+			SG_phy_minmax[index+SG_length]=Double.parseDouble(minMaxArray[1]);
+			index++;
+		 }
+		return SG_phy_minmax;
+		
+	}
+	
+	public static String ReverseParse(double [] userInputPhy,String canId,String fileLocation) {
+		File file = new File(fileLocation);
+		ArrayList<String> SG_list=txt2String(file,canId);
+		int SG_length=SG_list.size();	
+		 double SG_x[]=new double[SG_length];//保存x值
+		 int index=0;
+		 for(String str:SG_list) {
+			String[] sArray=str.split(" "); 
+			String dataIndexInformation=sArray[4];
+			String [] dataIndexInformationArray=dataIndexInformation.split("\\||@");
+			int startBit=Integer.parseInt(dataIndexInformationArray[0]);
+			int dataScale=Integer.parseInt(dataIndexInformationArray[1]);
+			String type=dataIndexInformationArray[2];
+			String ABstr=sArray[5].substring(1, sArray[5].length()-1);
+			String[] ABarray=ABstr.split(",");
+			double A=Double.parseDouble(ABarray[0]);
+			double B=Double.parseDouble(ABarray[1]);
+			//构造数据矩阵，从而得到DD
+			
+			
+			
+			
+			index++;
+		 }
+		
+		return "";
 	}
 
 }
