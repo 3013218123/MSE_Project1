@@ -72,8 +72,11 @@ public class Initial {
 		 }
 		//假设用户输入物理值，传入一个double数组,针对canId100
 		 double userInputPhy[]=new double[] {254,653.31,65484,0,52,65484};
-		
-		 
+		 System.out.println(ReverseParse(userInputPhy,"100","D:/eclipseEE/eclipse-workspace/CANTool/src/db0.txt"));
+		//测试
+		 String str="11001100"+"11111111"+"00110011"+"11111110"+"11001100"+
+					"11111111"+"00110011"+"11111111";
+		 System.out.println(binaryString2hexString(str));
 		 
 		 
 	}
@@ -206,6 +209,11 @@ public class Initial {
 		int SG_length=SG_list.size();	
 		 double SG_x[]=new double[SG_length];//保存x值
 		 int index=0;
+		//首先初始化一个全0的data数组，用来保存数据
+			String data[] = new String [] {"00000000","00000000","00000000","00000000",
+					"00000000","00000000","00000000","00000000"};
+		//全局最大行数
+			int maxRow=0;
 		 for(String str:SG_list) {
 			String[] sArray=str.split(" "); 
 			String dataIndexInformation=sArray[4];
@@ -217,15 +225,76 @@ public class Initial {
 			String[] ABarray=ABstr.split(",");
 			double A=Double.parseDouble(ABarray[0]);
 			double B=Double.parseDouble(ABarray[1]);
-			//构造数据矩阵，从而得到DD
+			//声明一个临时最大行数，找使用的最大行
+			int tempMaxRow=0;
+			//填充数据矩阵，从而得到DD
+			//1.计算信号量x,int型,x2表示2进制信号量
+			int x=(int)((userInputPhy[index]-B)/A);
+			String x2=Integer.toBinaryString(x);
+			for(int i=0;i<dataScale-x2.length();i++) x2="0"+x2;//补足位数
+			//如果只在一行显示，则两种方式相同，一起写
+			int startRow=startBit/8;
+			int startColumn=startBit%8;
+			int emptyBit=8-startColumn;
+			String strRight="",strLeft="";
+			if(startColumn>0) strRight=data[startRow].substring(8-startColumn,8);
+			if(emptyBit>=dataScale) { //只需要在该行显示
+				if(emptyBit>dataScale) data[startRow].substring(0, emptyBit-dataScale);
+				x2=strLeft+x2+strRight;
+				data[startRow]=x2;
+				tempMaxRow=startRow;
+			}else {//多行显示，分类型
+				if(type.equals("1+")) {//intel型
+					 int row=(dataScale-emptyBit)/8;//剩余行数
+					 int c=(dataScale-emptyBit)%8;//最后一行的个数
+					 tempMaxRow=startRow+row;
+					 data[startRow]=x2.substring(x2.length()-emptyBit, x2.length())+strRight;
+					 x2=x2.substring(0,x2.length()-emptyBit);
+						 for(int i=1;i<=row;i++) {
+							 data[startRow+i]=x2.substring(x2.length()-8, x2.length());
+							 x2=x2.substring(0,x2.length()-8);
+						 }
+						 if(c!=0) {
+							 data[startRow+row+1]=data[startRow+row+1].substring(0, 8-c)+x2;
+							 tempMaxRow++;
+						 }
+				}else if(type.equals("0+")) {//motorola型
+					int row=(dataScale-emptyBit)/8;//剩余行数
+					int c=(dataScale-emptyBit)%8;//最后一行的个数
+					tempMaxRow=startRow+row;
+					data[startRow]=x2.substring(0, emptyBit)+strRight;
+					x2=x2.substring(emptyBit,x2.length());
+						 for(int i=1;i<=row;i++) {
+							 data[startRow+i]=x2.substring(0, 8);
+							 x2=x2.substring(8,x2.length());
+						 }
+						 if(c!=0) {
+							 data[startRow+row+1]=x2+data[startRow+row+1].substring(c, 8);
+							 tempMaxRow++;
+						 }
+				}
+			}
 			
-			
+			if(tempMaxRow>maxRow) maxRow=tempMaxRow;
 			
 			
 			index++;
 		 }
-		
-		return "";
+		//需要知道使用了前多少字节，如果小于8，后面的字节不要了
+		//使用了0-maxRow行
+		 String DD="";
+		 int numDD=maxRow+1;
+		for(int j=0;j<numDD;j++) {
+			DD=DD+binaryString2hexString(data[j]);
+		}
+		String T_type="";
+		if(canId.length()==3) {
+			T_type="t";
+		}else{
+			T_type="T";
+		}
+		String str=T_type+canId+numDD+DD;
+		return str;
 	}
 
 }
