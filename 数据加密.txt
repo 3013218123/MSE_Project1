@@ -1,0 +1,15 @@
+File file = new File("/storage/emulated/0/pimsecure_debug.txt");
+FileInputStream inputFile = null;
+try {
+    inputFile = new FileInputStream(file);
+    byte[] buffer = new byte[(int) file.length()];
+    inputFile.read(buffer);
+    inputFile.close();
+    encodedString = Base64.encodeToString(buffer, Base64.DEFAULT);
+    Log.e("Base64", "Base64---->" + encodedString);
+    } 
+	catch (Exception e)
+	{
+
+    e.printStackTrace();
+}
