@@ -18,7 +18,7 @@ public class Signal {
     private String unit;
     private String NodeName;
 
-    Signal(String SignalName,int startBit,int dataLength,String arrangeType,double A,double B,double C,double D,String unit,String NodeName){
+    public Signal(String SignalName,int startBit,int dataLength,String arrangeType,double A,double B,double C,double D,String unit,String NodeName){
         SG_="SG_";
         this.SignalName=SignalName;
         seporator=":";
