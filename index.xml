@@ -1,0 +1,100 @@
+首页
+
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="fill_parent"
+
+    android:layout_height="fill_parent"
+
+    android:gravity="center_vertical"
+
+    android:stretchColumns="0,3">
+
+    <TableRow android:layout_marginTop="20px">
+
+        <TextView />
+
+        <Button
+
+            android:id="@+id/login"
+
+            android:text="连接"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            /
+
+    </TableRow>
+	  <TableRow android:layout_marginTop="20px">
+
+        <TextView />
+
+        <Button
+
+            android:id="@+id/login"
+
+            android:text="系统设置"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            /
+
+    </TableRow>
+	  <TableRow android:layout_marginTop="20px">
+
+        <TextView />
+
+        <Button
+
+            android:id="@+id/login"
+
+            android:text="接收"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            /
+
+    </TableRow>
+<TableRow android:layout_marginTop="20px">
+
+        <TextView />
+
+        <Button
+
+            android:id="@+id/login"
+
+            android:text="发送"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            /
+
+    </TableRow>
+	<TableRow android:layout_marginTop="20px">
+
+        <TextView />
+
+        <Button
+
+            android:id="@+id/login"
+
+            android:text="加载数据库"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            /
+
+    </TableRow>
+	
+</TableLayout>
