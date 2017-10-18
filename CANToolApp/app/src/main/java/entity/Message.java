@@ -9,10 +9,11 @@ public class Message {
     private String id;
     private String MessageName;
     private String seporator;
-    private String DLC;
+    private int DLC;
     private String NodeName;
 
-     Message(String id,String MessageName,String  DLC,String NodeName){
+
+     public Message(String id,String MessageName,int  DLC,String NodeName){
          BO_="BO_";
          this.id=id;
          this.MessageName=MessageName;
@@ -38,7 +39,7 @@ public class Message {
         return seporator;
     }
 
-    public String getDLC() {
+    public int getDLC() {
         return DLC;
     }
 
