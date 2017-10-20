@@ -1,0 +1,43 @@
+复制代码
+
+ 1    /**
+ 2      * 将服务器端取回的数据转化成Node
+ 3      * @param datas
+ 4      * @return
+ 5      * @throws IllegalAccessError
+ 6      */
+ 7     public static <T> List<Node> convertDataToNodes(List<T> datas) throws IllegalAccessException {
+ 8         List<Node> nodes = new ArrayList<>();
+ 9         Node node = null;
+10         for (T t : datas) {
+11             String id = "";
+12             String pid = "";
+13             String label = null;
+14             String type=null;
+15             node = null;
+16             Class c = t.getClass();
+17             Field fields[] = c.getDeclaredFields();
+18 
+19             for (Field field : fields) {
+20                 if (field.getAnnotation(TreeNodeId.class) != null) {
+21                     //设置访问权限，强制性的可以访问
+22                     field.setAccessible(true);
+23                     id= (String) field.get(t);
+24                 }
+25 
+26                 if (field.getAnnotation(TreeNodePid.class) != null) {
+27                     //设置访问权限，强制性的可以访问
+28                     field.setAccessible(true);
+29                     pid= (String) field.get(t);
+30                 }
+31 
+32                 if (field.getAnnotation(TreeNodeLabel.class) != null) {
+33                     //设置访问权限，强制性的可以访问
+34                     field.setAccessible(true);
+35                     label = (String) field.get(t);
+36                 }
+38             node = new Node(id, pid, label,type);
+39             nodes.add(node);
+40         }
+
+复制代码
