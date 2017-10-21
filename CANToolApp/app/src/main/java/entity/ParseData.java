@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -8,9 +9,9 @@ import java.util.Set;
 
 public class ParseData {
     private Message BO_Mse;
-    private Set<Signal> Signals;
+    private ArrayList<Signal> Signals;
     private double [] phyArray;
-    public ParseData(Message BO_Mse,Set<Signal>Signals,double[] phyArray){
+    public ParseData(Message BO_Mse,ArrayList<Signal>Signals,double[] phyArray){//构造函数
         this.BO_Mse=BO_Mse;
         this.Signals=Signals;
         this.phyArray=phyArray;
@@ -20,7 +21,7 @@ public class ParseData {
         return BO_Mse;
     }
 
-    public Set<Signal> getSignals() {
+    public ArrayList<Signal> getSignals() {
         return Signals;
     }
 
