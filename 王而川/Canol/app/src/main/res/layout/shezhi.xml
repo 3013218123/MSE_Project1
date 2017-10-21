@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="0">
+    <TextView
+
+        android:id="@+id/TextView1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:text="CanTool"
+        android:background="#F0F0F0"
+
+         />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="fill_parent"
+
+        android:layout_height="400dp"
+
+        android:gravity="center_vertical"
+
+        android:stretchColumns="0,3">
+
+        <TableRow>
+
+            <TextView />
+
+            <TextView
+
+                android:text="命令："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+
+                />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0F0F0"
+                android:id="@+id/shezhi_xiala"
+                android:entries="@array/sp1"
+                />
+
+            <TextView />
+
+        </TableRow>
+
+
+
+        <TableRow android:layout_marginTop="20px">
+
+            <TextView />
+
+            <Button
+
+                android:id="@+id/shezhi_fasong"
+
+                android:text="发送"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                />
+
+            <TextView />
+
+            <TextView />
+
+        </TableRow>
+        <TableRow android:layout_marginTop="20px">
+
+        </TableRow>
+    </TableLayout>
+
+
+    <TextView
+        android:id="@+id/TextView1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+
+        android:background="#F0F0F0"
+        android:gravity="center"
+        android:text="17软件第八组"
+        android:textSize="15sp" />
+</LinearLayout>

@@ -1,0 +1,28 @@
+public class FirstActivity extends Activity {  
+       
+    EditText firstNum;  
+    Button submit;  
+       
+    @Override  
+    public void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.main);  
+           
+        firstNum = (EditText)findViewById(R.id.firstNum);   
+        submit= (Button)findViewById(R.id.btnSubmit);  
+        submit.setOnClickListener(new View.OnClickListener() {  
+               
+        @Override  
+        public void onClick(View v) {  
+            String num1 = firstNum.getText().toString();     
+            Intent intent = new Intent();  
+            intent.putExtra("one", num1);  
+            intent.setClass(FirstActivity.this, SecondActivity.class);  
+            startActivity(intent);  
+            }  
+        });  
+    }  
+}
+
+Intent intent = getIntent();  
+String num1 = intent.getStringExtra("one");
