@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/welcome"
+    android:weightSum="1">
+
+
+    <TextView
+
+        android:id="@+id/TextView1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:text="CanTool"
+        android:background="#F0F0F0"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:gravity="center">
+
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="500dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="#00F5FF"
+                android:text="连接"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#00F5FF"
+                android:text="手动设置"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#00F5FF"
+                android:text="接收"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#00F5FF"
+                android:text="发送"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#00F5FF"
+                android:gravity="center"
+                android:text="加载数据"></Button>
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="center"></Button>
+        </TableRow>
+
+
+    </TableLayout>
+
+
+
+    <!-- 表格1-伸展 -->
+
+    <TextView
+
+        android:id="@+id/TextVi"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:text="17软件第八组"
+        android:background="#F0F0F0"
+        android:layout_gravity="bottom"
+        />
+
+
+
+</LinearLayout>
