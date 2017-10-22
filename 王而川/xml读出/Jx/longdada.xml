@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persons>
+  <person id="1">
+    <name>龙大哥</name>
+    <sex>帅哥</sex>
+  </person>
+  <person id="2">
+    <name>龙大爷</name>
+    <sex>妹子</sex>
+  </person>
+</persons>
+
