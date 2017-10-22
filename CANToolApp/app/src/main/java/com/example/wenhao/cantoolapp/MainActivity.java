@@ -48,7 +48,7 @@ private Button testButton;
                 }
                 */
                 //测试一下Parse
-                ParseData pd= Parse.parse("t39380000381403000000","canmsg-sample.dbc");
+                ParseData pd= Parse.parse("t320880478C2F05A1D29A","canmsg-sample.dbc");
                 Message mse=pd.getBO_Mse();
                 Log.i("tag",mse.getBO_()+mse.getId()+mse.getMessageName()+mse.getSeporator()+mse.getDLC()+mse.getNodeName());
                 ArrayList<Signal> signalArrayList=pd.getSignals();
@@ -63,8 +63,8 @@ private Button testButton;
                     index++;
                 }
                 //测试ReverseParse
-                //String str= ReverseParse.reverseParse("800",phyArray,"canmsg-sample.dbc");
-                //Log.i("tag",str);
+                String str= ReverseParse.reverseParse("800",phyArray,"canmsg-sample.dbc");
+                Log.i("tag",str);
 
             }
         });

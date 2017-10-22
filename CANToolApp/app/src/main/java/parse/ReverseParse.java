@@ -31,23 +31,27 @@ public class ReverseParse {
             //1.计算信号量x,int型,x2表示2进制信号量
             int x=(int)((userInputPhy[index]-signal.getB())/signal.getA());
             String x2=Integer.toBinaryString(x);
-            for(int i=0;i<signal.getDataLength()-x2.length();i++) x2="0"+x2;//补足位数
-            //如果只在一行显示，则两种方式相同，一起写
+            int m=signal.getDataLength()-x2.length();
+            for(int i=0;i<m;i++) {//补足位数
+                x2="0"+x2;
+            }
+
             int startRow=signal.getStartBit()/8;
             int startColumn=signal.getStartBit()%8;
-            int emptyBit=8-startColumn;
             String strRight="",strLeft="";
-            if(startColumn>0) strRight=data[startRow].substring(8-startColumn,8);
-            if(emptyBit>=signal.getDataLength()) { //只需要在该行显示
-                if(emptyBit>signal.getDataLength()) strLeft=data[startRow].substring(0, emptyBit-signal.getDataLength());
-                x2=strLeft+x2+strRight;
-                data[startRow]=x2;
-                tempMaxRow=startRow;
-            }else {//多行显示，分类型
-                if(signal.getArrangeType().equals("1+")) {//intel型
+            if(signal.getArrangeType().equals("1+")) {//intel型
+                int emptyBit=8-startColumn;
+                if(startColumn>0) strRight=data[startRow].substring(8-startColumn,8);
+                if(emptyBit>=signal.getDataLength()) { //只需要在该行显示
+                    if(emptyBit>signal.getDataLength()) strLeft=data[startRow].substring(0, emptyBit-signal.getDataLength());
+                    x2=strLeft+x2+strRight;
+                    data[startRow]=x2;
+                    tempMaxRow=startRow;
+                }else{
                     int row=(signal.getDataLength()-emptyBit)/8;//剩余行数
                     int c=(signal.getDataLength()-emptyBit)%8;//最后一行的个数
                     tempMaxRow=startRow+row;
+                    //if(startColumn>0) strRight=data[startRow].substring(8-startColumn,8);
                     data[startRow]=x2.substring(x2.length()-emptyBit, x2.length())+strRight;
                     x2=x2.substring(0,x2.length()-emptyBit);
                     for(int i=1;i<=row;i++) {
@@ -58,11 +62,21 @@ public class ReverseParse {
                         data[startRow+row+1]=data[startRow+row+1].substring(0, 8-c)+x2;
                         tempMaxRow++;
                     }
-                }else if(signal.getArrangeType().equals("0+")) {//motorola型
+                }
+
+            }else if(signal.getArrangeType().equals("0+")) {//motorola型
+                int emptyBit=startColumn+1;
+                strLeft=data[startRow].substring(0,8-emptyBit);
+                if(emptyBit>=signal.getDataLength()) { //只需要在该行显示
+                    if(emptyBit>signal.getDataLength()) strRight=data[startRow].substring(7-startColumn+signal.getDataLength(), 8);
+                    x2=strLeft+x2+strRight;
+                    data[startRow]=x2;
+                    tempMaxRow=startRow;
+                }else{
                     int row=(signal.getDataLength()-emptyBit)/8;//剩余行数
                     int c=(signal.getDataLength()-emptyBit)%8;//最后一行的个数
                     tempMaxRow=startRow+row;
-                    data[startRow]=x2.substring(0, emptyBit)+strRight;
+                    data[startRow]=strLeft+x2.substring(0, emptyBit);
                     x2=x2.substring(emptyBit,x2.length());
                     for(int i=1;i<=row;i++) {
                         data[startRow+i]=x2.substring(0, 8);
@@ -73,7 +87,9 @@ public class ReverseParse {
                         tempMaxRow++;
                     }
                 }
+
             }
+
 
             if(tempMaxRow>maxRow) maxRow=tempMaxRow;
             index++;
@@ -87,21 +103,21 @@ public class ReverseParse {
             DD=DD+binaryString2hexString(data[j]);
         }
         Log.i("tag",DD);
-        /*
-        if(BO_id.length()==3) {
-            T_type="t";
-        }else{
+        String T_type="t";
+        String id="";
+        if(Long.parseLong(BO_id)>Integer.MAX_VALUE) {
             T_type="T";
-        }
-        */
+            id=""+decimalToHex(Long.parseLong(BO_id));
 
+        }else{
+            id=""+decimalToHex(Integer.parseInt(BO_id));
+            while(id.length()<3){
+                id="0"+id;
+            }
+        }
         //这里需要进行转换
         //T_type的判断也需要重写
-        String T_type="t";
-        String id=""+decimalToHex(Integer.parseInt(BO_id));
-        while(id.length()<3){
-            id="0"+id;
-        }
+
         String str=T_type+id+numDD+DD;
 
         return str;
@@ -125,21 +141,21 @@ public class ReverseParse {
             {
                 iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);
             }
-            tmp.append(Integer.toHexString(iTmp));
+            tmp.append(decimalToHex(iTmp));
         }
         return tmp.toString();
     }
-    public static String decimalToHex(int decimal) {
+    public static String decimalToHex(long decimal) {
         String hex = "";
         while(decimal != 0) {
-            int hexValue = decimal % 16;
+            long hexValue = decimal % 16;
             hex = toHexChar(hexValue) + hex;
             decimal = decimal / 16;
         }
         return  hex;
     }
     //将0~15的十进制数转换成0~F的十六进制数
-    public static char toHexChar(int hexValue) {
+    public static char toHexChar(long hexValue) {
         if(hexValue <= 9 && hexValue >= 0)
             return (char)(hexValue + '0');
         else

@@ -26,6 +26,7 @@ public class Parse {
             /*
             id转换
              */
+            id=""+Long.parseLong(id,16);
             numOfDD=Integer.parseInt(dataStr.substring(9,10));
             totalDD=dataStr.substring(10,10+numOfDD*2);
 
@@ -103,16 +104,16 @@ public class Parse {
         }else if(type.equals("0+")){//motorola型
             int startRow=startBit/8;
             int startColumn=startBit%8;
-            int emptyBit=8-startColumn;
+            int emptyBit=1+startColumn;
             if(emptyBit>=dataL) { //只需要在该行显示
-                String ss=dataMatric[startRow].substring(7-(startColumn+dataL-1)%8, 8-startColumn);
+                String ss=dataMatric[startRow].substring(7-startColumn, dataL+7-startColumn);
                 return ss;
             }
             else {
                 int row=(dataL-emptyBit)/8;
                 int c=(dataL-emptyBit)%8;
 
-                String ss=dataMatric[startRow].substring(0, 8-startBit%8);
+                String ss=dataMatric[startRow].substring(7-startColumn, 8);
                 for(int i=1;i<=row;i++) {
                     ss=ss+dataMatric[startRow+i];
                 }
