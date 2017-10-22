@@ -1,11 +1,11 @@
 package com.mse8.teamwe.cantoolapp;
 
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.content.Context;
 import android.widget.TextView;
+import android.widget.BaseAdapter;
+import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,6 @@ public class BlueToothAdapter extends BaseAdapter {
         this._blueToothList = blueToothList;
         this.mInflater = LayoutInflater.from(context);
     }
-
 
     @Override
     public int getCount() {
@@ -69,6 +68,7 @@ public class BlueToothAdapter extends BaseAdapter {
         return new CharSequence[0];
     }
 
+
     class ViewHolder {
         protected View child;
         protected TextView msg;
@@ -79,5 +79,4 @@ public class BlueToothAdapter extends BaseAdapter {
 
         }
     }
-
 }

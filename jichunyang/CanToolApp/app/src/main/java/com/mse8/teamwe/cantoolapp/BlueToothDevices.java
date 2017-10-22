@@ -10,11 +10,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -25,7 +28,7 @@ import java.util.Set;
 
 public class BlueToothDevices extends Activity {
 
-    public static Ct_BtSocket ct_btSocket=new Ct_BtSocket();
+    public static Ct_BtSocket ct_btSocket = new Ct_BtSocket();
 
     private BluetoothAdapter _blueToothAdapter;
 
@@ -43,6 +46,25 @@ public class BlueToothDevices extends Activity {
 
     private Button _ceshiButton;
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String info = (String) msg.obj;
+
+            switch (msg.what) {
+                case AppComFun._STATUS_ACCEPT:
+                    Toast.makeText(BlueToothDevices.this, info, Toast.LENGTH_SHORT).show();
+                    break;
+                case AppComFun._STATUS_CONNECT:
+                    Toast.makeText(BlueToothDevices.this, info, Toast.LENGTH_SHORT).show();
+                    break;
+                case AppComFun._STATUS_SENDMSG:
+                    Toast.makeText(BlueToothDevices.this, info, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +74,7 @@ public class BlueToothDevices extends Activity {
 
         registerBroadcast();
 
-        SearchBlueDevices();
+        this.ct_btSocket.SetPromptHandler(mHandler);
 
     }
 
@@ -76,12 +98,12 @@ public class BlueToothDevices extends Activity {
         this._serButton = (Button) findViewById(R.id.btn_str_service);
         this._serButton.setOnClickListener(mServiceListener);
 
-        this._stpButton=(Button) findViewById(R.id.btn_stp_service);
+        this._stpButton = (Button) findViewById(R.id.btn_stp_service);
         this._stpButton.setOnClickListener(mStopServiceListener);
 
 
-        this._ceshiButton=(Button) findViewById(R.id.tiaozhuan);
-        this._ceshiButton.setOnClickListener(new View.OnClickListener(){
+        this._ceshiButton = (Button) findViewById(R.id.tiaozhuan);
+        this._ceshiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -100,20 +122,18 @@ public class BlueToothDevices extends Activity {
 
     }
 
-    private View.OnClickListener mServiceListener=new View.OnClickListener() {
+    private View.OnClickListener mServiceListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //开启服务按钮
-
+            //开启服务
             ct_btSocket.StartServer();
         }
     };
 
-    private View.OnClickListener mStopServiceListener=new View.OnClickListener() {
+    private View.OnClickListener mStopServiceListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //断开服务按钮
-            ct_btSocket.StopServer();
+            //断开连接
             ct_btSocket.StopClient();
         }
     };
@@ -121,6 +141,7 @@ public class BlueToothDevices extends Activity {
     private View.OnClickListener mSearchListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
+
             if (_blueToothAdapter.isDiscovering()) {
                 _blueToothAdapter.cancelDiscovery();
                 _strButton.setText("重新搜索");
@@ -128,9 +149,10 @@ public class BlueToothDevices extends Activity {
                 _blueToothList.clear();
                 _mBTAdapter.notifyDataSetChanged();
 
-                SearchBlueDevices();//搜索蓝牙设备
+                //搜索蓝牙设备
+                SearchBlueDevices();
 
-				/* 开始搜索 */
+                //开始搜索
                 _blueToothAdapter.startDiscovery();
                 _strButton.setText("ֹͣ停止搜索");
             }
@@ -145,38 +167,40 @@ public class BlueToothDevices extends Activity {
             String info = bean._message;
             final String address = info.substring(info.length() - 17);
 
-            //BluetoothActivity.BlueToothAddress = address;
 
             AlertDialog.Builder stopDialog = new AlertDialog.Builder(BlueToothDevices.this);
-            stopDialog.setTitle("连接");//标题
+
+            stopDialog.setTitle("连接");
             stopDialog.setMessage(bean._message);
+
             stopDialog.setPositiveButton("连接", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+
                     _blueToothAdapter.cancelDiscovery();
-                    //_serButton.setText("重新搜索");
+                    _strButton.setText("重新搜索");
 
-                    String s = address;
-
-                    ct_btSocket._btDevice = ct_btSocket._btAdapter.getRemoteDevice(s);
+                    ct_btSocket.SetBtDevice(address);
                     ct_btSocket.StartClient();
-                    //BluetoothActivity.mType = Type.CILENT;
-                    //BluetoothActivity.mTabHost.setCurrentTab(1);
 
                     dialog.cancel();
                 }
             });
+
             stopDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    //BluetoothActivity.BlueToothAddress = null;
+
                     dialog.cancel();
                 }
             });
+
+
             stopDialog.show();
         }
     };
 
     //搜索蓝牙设备
     private void SearchBlueDevices() {
+
         Set<BluetoothDevice> deviceSet = this._blueToothAdapter.getBondedDevices();
 
         if (deviceSet.size() > 0) {
@@ -193,6 +217,7 @@ public class BlueToothDevices extends Activity {
 
     //注册广播
     private void registerBroadcast() {
+
         //设备被发现广播
         IntentFilter discoveryFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, discoveryFilter);
@@ -201,7 +226,6 @@ public class BlueToothDevices extends Activity {
         IntentFilter foundFilter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         this.registerReceiver(mReceiver, foundFilter);
     }
-
 
     //发现设备广播
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -244,6 +268,9 @@ public class BlueToothDevices extends Activity {
         if (_blueToothAdapter != null) {
             _blueToothAdapter.cancelDiscovery();
         }
+
+        ct_btSocket.StopServer();
+
         this.unregisterReceiver(mReceiver);
     }
 

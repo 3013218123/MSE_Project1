@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.os.Message;
 
 import java.io.IOException;
@@ -24,16 +25,10 @@ public class Ct_BtSocket {
     private BluetoothSocket _btClientSocket;
 
     //设备，蓝牙适配器
-    public BluetoothAdapter _btAdapter;
+    private BluetoothAdapter _btAdapter;
     //设备，蓝牙
-    public BluetoothDevice _btDevice;
+    private BluetoothDevice _btDevice;
 
-    //服务器名称
-    public static final String PROTOCOL_SCHEME_RFCOMM = "cantoolpp";
-    //UUID
-    public static final String _UUID = "00001101-0000-1000-8000-00805F9B34FB";
-    //标志号
-    private static final int STATUS_CONNECT = 0x11;
 
     //服务端线程
     public CtServerThread _btServerThread;
@@ -42,14 +37,60 @@ public class Ct_BtSocket {
     //数据线程
     private DataThread _btReadThread;
 
+
+    //提示消息处理
+    private Handler _handler;
+
+    //发送信息到信息处理的类
+
+    //构造函数
     public Ct_BtSocket() {
 
         this._btAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
+    //获取蓝牙适配器
+    public BluetoothAdapter GetBtAdapter() {
+        if (this._btAdapter != null)
+            return this._btAdapter;
+        else
+            return null;
+    }
+
+    //设置蓝牙设备
+    public void SetBtDevice(String address) {
+
+        if (address == "" || address == null) {
+            throw new NullPointerException("address is null.");
+        }
+
+        if (_btAdapter == null) {
+            throw new NullPointerException("BluetoothAdapter is null.");
+        }
+
+        this._btDevice = this._btAdapter.getRemoteDevice(address);
+    }
+
+    //设置提示消息处理器
+    public void SetPromptHandler(Handler handler) {
+
+        if (handler == null) {
+            throw new NullPointerException("Handler is null.");
+        }
+
+        this._handler = handler;
+    }
+
     //发送数据
     public void CtSendMessage(String msg) {
         if (_btClientSocket == null) {
+
+            Message _msg = new Message();
+            _msg.obj = "请开启客户端线程...";
+            _msg.what = AppComFun._STATUS_SENDMSG;
+
+            _handler.sendMessage(_msg);
+
             return;
         }
         try {
@@ -62,12 +103,36 @@ public class Ct_BtSocket {
 
     //开启服务端
     public void StartServer() {
+
+        if (this._btServerThread != null) {
+
+            Message _msg = new Message();
+            _msg.obj = "服务端线程已开启...";
+            _msg.what = AppComFun._STATUS_ACCEPT;
+
+            _handler.sendMessage(_msg);
+
+            return;
+        }
+
         this._btServerThread = new CtServerThread();
         this._btServerThread.start();
     }
 
     //开启客户端
     public void StartClient() {
+
+        if (this._btClientThread != null) {
+
+            Message _msg = new Message();
+            _msg.obj = "客户端线程已开启，若想重新连接，请先断开连接...";
+            _msg.what = AppComFun._STATUS_CONNECT;
+
+            _handler.sendMessage(_msg);
+
+            return;
+        }
+
         this._btClientThread = new CtClientThread();
         this._btClientThread.start();
     }
@@ -125,28 +190,30 @@ public class Ct_BtSocket {
     }
 
 
+    //服务端线程
     private class CtServerThread extends Thread {
         @Override
         public void run() {
             try {
 
                 //创建蓝牙服务端Socket，参数为服务器名称、UUID
-                _btServerSocket = _btAdapter.listenUsingRfcommWithServiceRecord(PROTOCOL_SCHEME_RFCOMM, UUID.fromString(_UUID));
+                _btServerSocket = _btAdapter.listenUsingRfcommWithServiceRecord(AppComFun._PROTOCOL_SCHEME_RFCOMM, UUID.fromString(AppComFun._UUID));
+
 
                 Message msg = new Message();
                 msg.obj = "请稍候，正在等待客户端的连接...";
-                msg.what = STATUS_CONNECT;
+                msg.what = AppComFun._STATUS_ACCEPT;
 
-                //mHandler.sendMessage(msg);
+                _handler.sendMessage(msg);
 
                 //接受客户端的连接请求
                 _btClientSocket = _btServerSocket.accept();
 
                 msg = new Message();
-                msg.obj = "客户端已经连接上！可以发送信息。";
-                msg.what = STATUS_CONNECT;
+                msg.obj = "客户端已经连接上，可以发送信息...";
+                msg.what = AppComFun._STATUS_ACCEPT;
 
-                //mHandler.sendMessage(msg);
+                _handler.sendMessage(msg);
 
                 //启动数据线程
                 _btReadThread = new DataThread();
@@ -159,44 +226,42 @@ public class Ct_BtSocket {
         }
     }
 
-
+    //客户端线程
     private class CtClientThread extends Thread {
         @Override
         public void run() {
             try {
 
-                _btClientSocket = _btDevice.createRfcommSocketToServiceRecord(UUID.fromString(_UUID));
+                _btClientSocket = _btDevice.createRfcommSocketToServiceRecord(UUID.fromString(AppComFun._UUID));
 
                 Message msg = new Message();
-                msg.obj = "请稍候，正在连接服务器:";
-                msg.what = STATUS_CONNECT;
+                msg.obj = "请稍候，正在连接服务器...";
+                msg.what = AppComFun._STATUS_CONNECT;
 
-                //mHandler.sendMessage(msg);
+                _handler.sendMessage(msg);
 
                 //连接服务端
                 _btClientSocket.connect();
 
                 msg = new Message();
-                msg.obj = "已经连接上服务端！可以发送信息。";
-                msg.what = STATUS_CONNECT;
+                msg.obj = "已经连接上服务端，可以发送信息...";
+                msg.what = AppComFun._STATUS_CONNECT;
 
-                //mHandler.sendMessage(msg);
+                _handler.sendMessage(msg);
 
-                //启动数据线程
-                _btReadThread = new DataThread();
-                _btReadThread.start();
 
             } catch (IOException e) {
+
                 Message msg = new Message();
                 msg.obj = "连接服务端异常！断开连接重新试一试。";
-                msg.what = STATUS_CONNECT;
+                msg.what = AppComFun._STATUS_CONNECT;
 
-                //mHandler.sendMessage(msg);
+                _handler.sendMessage(msg);
             }
         }
     }
 
-
+    //数据线程
     private class DataThread extends Thread {
         @Override
         public void run() {
@@ -215,14 +280,11 @@ public class Ct_BtSocket {
                             buf_data[i] = buffer[i];
                         }
 
-                        //数据在这里
+                        //将byte数据转化为字符串
                         String s = new String(buf_data);
 
-                        Message msg = new Message();
-                        msg.obj = s;
-                        msg.what = 1;
+                        //将接收到的数据存储在链表中,传输到数据处理模块
 
-                        //mHandler.sendMessage(msg);
                     }
                 }
 
