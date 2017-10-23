@@ -24,6 +24,9 @@ public class Ct_BtSocket {
     //蓝牙客户发送端Socket
     private BluetoothSocket _btClientSocket;
 
+    //测试
+    private BluetoothSocket _ceshi=null;
+
     //设备，蓝牙适配器
     private BluetoothAdapter _btAdapter;
     //设备，蓝牙
@@ -41,7 +44,15 @@ public class Ct_BtSocket {
     //提示消息处理
     private Handler _handler;
 
+    private Handler _dhandler;
+
     //发送信息到信息处理的类
+
+    private String sss="测试数据111";
+
+    public String GetSSS() {
+        return this.sss;
+    }
 
     //构造函数
     public Ct_BtSocket() {
@@ -79,6 +90,16 @@ public class Ct_BtSocket {
         }
 
         this._handler = handler;
+    }
+
+    //设置发送数据的消息处理器
+    public void SetDataHandler(Handler dhandler) {
+
+        if (dhandler == null) {
+            throw new NullPointerException("Handler is null.");
+        }
+
+        this._dhandler = dhandler;
     }
 
     //发送数据
@@ -207,7 +228,8 @@ public class Ct_BtSocket {
                 _handler.sendMessage(msg);
 
                 //接受客户端的连接请求
-                _btClientSocket = _btServerSocket.accept();
+                //_btClientSocket = _btServerSocket.accept();
+                _ceshi = _btServerSocket.accept();
 
                 msg = new Message();
                 msg.obj = "客户端已经连接上，可以发送信息...";
@@ -270,7 +292,9 @@ public class Ct_BtSocket {
             InputStream is = null;
 
             try {
-                is = _btClientSocket.getInputStream();
+                //is = _btClientSocket.getInputStream();
+
+                is = _ceshi.getInputStream();
 
                 while (true) {
                     if ((bytes = is.read(buffer)) > 0) {
@@ -282,6 +306,14 @@ public class Ct_BtSocket {
 
                         //将byte数据转化为字符串
                         String s = new String(buf_data);
+
+                        Message msg = new Message();
+                        msg.obj = s;
+                        msg.what = AppComFun._STATUS_CONNECT;
+
+                        _dhandler.sendMessage(msg);
+
+                        sss=s;
 
                         //将接收到的数据存储在链表中,传输到数据处理模块
 

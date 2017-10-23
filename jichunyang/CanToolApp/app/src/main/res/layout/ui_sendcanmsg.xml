@@ -18,4 +18,10 @@
         android:text="测试曲线"
         />
 
+    <TextView
+        android:id="@+id/list_receive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </LinearLayout>
