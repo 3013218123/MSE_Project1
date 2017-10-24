@@ -18,10 +18,25 @@
         android:text="测试曲线"
         />
 
+    <Button
+        android:id="@+id/btn_tree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="树形形状"
+        />
+
+    <Button
+        android:id="@+id/btn_tableview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="表格控件"
+        />
+
     <TextView
         android:id="@+id/list_receive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="测试"
         />
 
 </LinearLayout>
