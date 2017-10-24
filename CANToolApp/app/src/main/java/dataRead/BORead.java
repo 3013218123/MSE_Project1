@@ -46,6 +46,7 @@ public class BORead {
                     String MessageName=BO_Array[2].substring(0,BO_Array[2].length()-1);
                     int DLC=Integer.parseInt(BO_Array[3]);
                     String NodeName=BO_Array[4];
+
                     Message mse=new Message(BO_id,MessageName,DLC,NodeName);
                     return  mse;
                 }

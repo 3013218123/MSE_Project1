@@ -53,7 +53,15 @@ public class Parse {
         for(Iterator it = Signals.iterator(); it.hasNext(); )
         {
             Signal  signal= (Signal) it.next();
-            int x=Integer.parseInt(analysis( signal.getStartBit(),signal.getDataLength(),dataMatric,signal.getArrangeType() ),2);//该信号的物理值
+            String analysis=analysis( signal.getStartBit(),signal.getDataLength(),dataMatric,signal.getArrangeType() );
+            int x=0;
+            if(analysis.equals("")){//此时SG中出现 1-等不合法数据
+                ParseData errorPD=new ParseData();
+                return errorPD;
+            }else {
+                x=Integer.parseInt(analysis,2);//该信号的物理值
+            }
+
             phyArray[index]=signal.getA()*x+signal.getB();
             //Log.i("tag",signal.getA()*x+signal.getB()+"");
             index++;

@@ -143,7 +143,11 @@ public class ReverseParse {
             }
             tmp.append(decimalToHex(iTmp));
         }
-        return tmp.toString();
+        String str=tmp.toString();
+        while(str.length()<2){
+            str="0"+str;
+        }
+        return str;
     }
     public static String decimalToHex(long decimal) {
         String hex = "";
