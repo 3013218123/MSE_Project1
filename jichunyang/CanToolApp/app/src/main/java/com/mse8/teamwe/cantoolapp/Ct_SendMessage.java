@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mse8.teamwe.cantoolapp.tableview.TableActivity;
+import com.mse8.teamwe.cantoolapp.treeview.tree_view.TreeActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,10 @@ public class Ct_SendMessage extends Activity {
     private Button _curve;
 
     private TextView _listreceive;
+
+    private Button _tree;
+
+    private Button _tableview;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -70,6 +77,12 @@ public class Ct_SendMessage extends Activity {
 
         this.ceshi.SetDataHandler(mHandler);
 
+        this._tree = findViewById(R.id.btn_tree);
+        this._tree.setOnClickListener(treecurveceshi);
+
+        this._tableview = findViewById(R.id.btn_tableview);
+        this._tableview.setOnClickListener(tableviewceshi);
+
 
 //        ReceiveData rd = new ReceiveData();
 //        rd.start();
@@ -91,6 +104,26 @@ public class Ct_SendMessage extends Activity {
 
             Intent intent = new Intent();
             intent.setClass(Ct_SendMessage.this, CanPhysicalCurve.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener treecurveceshi = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent();
+            intent.setClass(Ct_SendMessage.this, TreeActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener tableviewceshi = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent();
+            intent.setClass(Ct_SendMessage.this, TableActivity.class);
             startActivity(intent);
         }
     };
