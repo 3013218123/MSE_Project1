@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
+    <TableRow
+
+        android:gravity="center"
+
+        android:background="#F0F0F0"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/TextView1"
+            android:layout_gravity="center"
+            android:text="CanTool"
+            android:textSize="30sp"
+            />
+    </TableRow>
+
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+
+
+            <TextView
+
+                android:text="您已经选择的CAN信息："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+
+                />
+
+            <EditText
+                android:id="@+id/fasong_yitianjia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:gravity="top"
+                android:focusable="false"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:background="@android:drawable/edit_text"
+                >
+            </EditText>
+
+            <TextView /> <TextView />
+
+        </TableRow>
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+
+
+            <TextView
+
+                android:text="选择BO信息："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0F0F0"
+                android:id="@+id/fasong_xiala"
+                android:entries="@array/sp"
+                />
+
+
+        <TextView />
+            <TextView />
+
+        </TableRow>
+
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+
+
+            <TextView
+
+                android:text="命令："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+
+                />
+
+            <EditText
+
+                android:id="@+id/fasong_mingling"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:background="@android:drawable/edit_text"/>
+
+            <TextView />  <TextView />
+
+        </TableRow>
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+            <TextView
+
+                android:text="发送周期："
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+                android:id="@+id/fasong_id"
+
+                />
+
+            <EditText
+
+                android:id="@+id/fasong_edi"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                android:textSize="24px"
+
+                android:minWidth="220px"/>
+
+            <TextView />  <TextView />
+
+        </TableRow>
+
+
+
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+
+
+
+            <Button
+
+                android:id="@+id/fasong_button_tianjia"
+
+                android:text="添加"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                />
+
+            <Button
+
+                android:id="@+id/fasong_button_fasong"
+
+                android:text="提交"
+
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"/>
+
+            <TextView />
+
+        </TableRow>
+
+    <TableRow
+        android:gravity="center"
+        android:layout_gravity="bottom">
+
+        <TextView
+
+            android:id="@+id/TextVi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="#F0F0F0"
+            android:gravity="center"
+            android:text="17软件第八组"
+            android:textSize="20sp" />
+    </TableRow>
+</TableLayout>
