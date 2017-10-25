@@ -12,12 +12,16 @@ import com.mse8.teamwe.cantoolapp.R;
 
 public class TableActivity extends Activity {
 
+    private TableView _tableActivity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ui_tableview);
 
+        this._tableActivity = (TableView) findViewById(R.id.table_view);
 
-
+        int[] tmp = {18, 17, 16, 31, 30, 29, 28};
+        this._tableActivity.CanSignalLayout(tmp);
     }
 }

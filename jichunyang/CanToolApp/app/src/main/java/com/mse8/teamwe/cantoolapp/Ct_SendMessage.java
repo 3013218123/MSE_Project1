@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mse8.teamwe.cantoolapp.physicalcurve.NiaojianActivity;
 import com.mse8.teamwe.cantoolapp.tableview.TableActivity;
 import com.mse8.teamwe.cantoolapp.treeview.tree_view.TreeActivity;
 
@@ -103,7 +104,7 @@ public class Ct_SendMessage extends Activity {
         public void onClick(View v) {
 
             Intent intent = new Intent();
-            intent.setClass(Ct_SendMessage.this, CanPhysicalCurve.class);
+            intent.setClass(Ct_SendMessage.this, NiaojianActivity.class);
             startActivity(intent);
         }
     };

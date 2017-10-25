@@ -139,16 +139,21 @@ public class TableView extends ViewGroup {
 
     public void CanSignalLayout(int[] key) {
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                TextView child = tv[i][j];
-                String tmp = child.getText().toString();
-                int tp = Integer.parseInt(tmp);
-                if (tp == key[j]) {
-                    child.setTextColor(Color.rgb(255, 0, 0));
+        for(int k=0;k<key.length;k++) {
+            int cc = key[k];
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    TextView child = tv[i][j];
+                    String tmp = child.getText().toString();
+                    int tp = Integer.parseInt(tmp);
+                    if (tp == cc) {
+                        child.setBackgroundColor(Color.rgb(255, 0, 0));
+                        break;
+                    }
                 }
             }
         }
+
 //        int count = getChildCount();
 //        for (int j = 0; j < count; j++) {
 //            if (j == key[j]) {
