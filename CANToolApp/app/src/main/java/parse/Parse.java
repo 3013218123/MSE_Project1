@@ -66,7 +66,7 @@ public class Parse {
             //Log.i("tag",signal.getA()*x+signal.getB()+"");
             index++;
         }
-        ParseData pd=new ParseData(BO_Mse,Signals,phyArray);
+        ParseData pd=new ParseData(BO_Mse,Signals,phyArray,dataMatric);
         return pd;
     }
 

@@ -1,6 +1,7 @@
 package com.example.wenhao.cantoolapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import Save.Convert;
 import Save.SaveCsv;
 import dataRead.BORead;
 import dataRead.BOReadAll;
@@ -104,8 +106,14 @@ private Button testButton;
 //                list.add("4,5,6");
 //                Log.i("tag",String.valueOf(SaveCsv.exportCsv(file,list)));
                 //测试一下SaveCsv
-                String [] dataStrArray=new String[]{"t31D80100000000000000","t320880478C2F05A1D29A","t360800402418E4000000"};
-                SaveCsv.writeAll("test.csv",dataStrArray,"canmsg-sample.dbc");
+                //String [] dataStrArray=new String[]{"t31D80100000000000000","t320880478C2F05A1D29A","t360800402418E4000000"};
+                //SaveCsv.writeAll("test.csv",dataStrArray,"canmsg-sample.dbc");
+                //测试保存json
+//                boolean result=Convert.convert("canmsg-sample.dbc","t3Json.txt","");
+//                Log.i("tag",String.valueOf(result));
+                //测试解析json
+                //Convert.JsonToDbc("t3Json.txt","");
+
 
             }
         });

@@ -14,6 +14,7 @@ public class ParseData {
     private ArrayList<Signal> Signals;
     private double [] phyArray;
     private boolean isRight=true;
+    private String [] dataMatric;
 
 
 
@@ -22,10 +23,11 @@ public class ParseData {
 
     }
 
-    public ParseData(Message BO_Mse,ArrayList<Signal>Signals,double[] phyArray){//构造函数
+    public ParseData(Message BO_Mse,ArrayList<Signal>Signals,double[] phyArray,String[] dataMatric){//构造函数
         this.BO_Mse=BO_Mse;
         this.Signals=Signals;
         this.phyArray=phyArray;
+        this.dataMatric=dataMatric;
 
     }
 
@@ -40,8 +42,13 @@ public class ParseData {
     public double[] getPhyArray() {
         return phyArray;
     }
-    public boolean getSsRight() {
+
+
+    public boolean getisRight() {
         return isRight;
+    }
+    public String[] getDataMatric() {
+        return dataMatric;
     }
 }
 
