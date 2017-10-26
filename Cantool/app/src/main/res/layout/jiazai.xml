@@ -23,75 +23,61 @@
         android:gravity="center"
         android:layout_marginBottom="30dp">
 
-            <TextView
-                android:id="@+id/txt"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="收到CAN信息" />
-        </TableRow>
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="收到CAN信息" />
+    </TableRow>
 
     <TableRow
         android:gravity="center"
         android:layout_marginBottom="30dp">
 
-            <RadioGroup
-                android:id="@+id/jieshou_r1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+        <RadioGroup
+            android:id="@+id/jieshou_r1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-            </RadioGroup>
-        </TableRow>
-
-
+        </RadioGroup>
+    </TableRow>
 
 
-    <TableRow
-        android:gravity="center"
-        android:layout_marginBottom="30dp">
 
-            <Button
-                android:id="@+id/jieshou_yibiaopan"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#00F5FF"
-                android:gravity="center"
-                android:text="仪表盘"></Button>
-
-        </TableRow>
-
-
-    <TableRow
-        android:gravity="center"
-        android:layout_marginBottom="30dp">
-
-            <Button
-                android:id="@+id/jieshou_wuli"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#00F5FF"
-                android:gravity="center"
-                android:text="物理曲线"></Button>
-
-        </TableRow>
 
     <TableRow
         android:gravity="center"
         android:layout_marginBottom="30dp">
 
         <Button
-            android:id="@+id/btn_can_layout"
+            android:id="@+id/jiazai_baocun"
             android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#00F5FF"
             android:gravity="center"
-            android:text="CAN信号分布"></Button>
+            android:text="保存XML"></Button>
 
     </TableRow>
+    <TableRow
+        android:gravity="center"
+        android:layout_marginBottom="30dp">
+
+        <Button
+            android:id="@+id/jiazai_duru"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#00F5FF"
+            android:gravity="center"
+            android:text="读出XML"></Button>
+
+    </TableRow>
+
+
+
 
     <TableRow
         android:gravity="center"

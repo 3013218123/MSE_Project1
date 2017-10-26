@@ -46,4 +46,11 @@ public class Message {
     public String getNodeName() {
         return NodeName;
     }
+
+//    public String  setId(String id){
+//
+//        this.id=id;
+//        return id;
+//
+//    }
 }

@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 
 import android.widget.RadioGroup;
 
+import android.widget.Toast;
+
 import com.example.administrator.canol.blue.AppComFun;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
@@ -22,12 +24,11 @@ import com.example.administrator.canol.parse.Parse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Jieshou extends AppCompatActivity {
+public class Jiazai extends AppCompatActivity {
 
 
     private Button button;
     private Button button1;
-    private Button btn_canlayout;
     private List<String> list = new ArrayList<String>();
     private ArrayList<Signal> signals;
     private String selectText;
@@ -35,13 +36,12 @@ public class Jieshou extends AppCompatActivity {
     private String filename;
     //private String[] strings;
     private List<String> strings = AppComFun.ltmp;
-    private RadioGroup radioGroup;
-    int lastLength = 0;
+    private  RadioGroup radioGroup;
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
-            if (lastLength != strings.size()) Update();
-            lastLength = strings.size();
+            Update();
             handler.postDelayed(this, 1000 * 5);// 间隔120秒
         }
 
@@ -50,7 +50,7 @@ public class Jieshou extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.jieshou);
+        setContentView(R.layout.jiazai);
 
         handler.postDelayed(runnable, 1000 * 5);
         Update();
@@ -64,9 +64,8 @@ public class Jieshou extends AppCompatActivity {
 
 
     public void Update() {
-        button = (Button) findViewById(R.id.jieshou_yibiaopan);
-        button1 = (Button) findViewById(R.id.jieshou_wuli);
-        btn_canlayout = (Button) findViewById(R.id.btn_can_layout);
+        button = (Button) findViewById(R.id.jiazai_baocun);
+        button1 = (Button) findViewById(R.id.jiazai_duru);
         //strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
         filename = "canmsg-sample.dbc";
         radioGroup = (RadioGroup) findViewById(R.id.jieshou_r1);
@@ -113,7 +112,7 @@ public class Jieshou extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.putExtra("key", selectText);
-                        intent.setClass(Jieshou.this, Yibiaopan.class);
+                        intent.setClass(Jiazai.this, Yibiaopan.class);
                         startActivity(intent);
                     }
                 });
@@ -123,17 +122,7 @@ public class Jieshou extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.putExtra("key", selectText);
 
-                        intent.setClass(Jieshou.this, Qushi.class);
-                        startActivity(intent);
-                    }
-                });
-                btn_canlayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra("key", selectText);
-
-                        intent.setClass(Jieshou.this, TableViewActivity.class);
+                        intent.setClass(Jiazai.this, Qushi.class);
                         startActivity(intent);
                     }
                 });
@@ -144,5 +133,5 @@ public class Jieshou extends AppCompatActivity {
 
     }
 
-}
 
+}

@@ -44,6 +44,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".Jieshou1"
+            android:label="Jieshou1"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".Qushi"
             android:label="Qushi"
             android:screenOrientation="portrait" >
@@ -65,6 +70,12 @@
 
         <activity android:name=".blue.Ct_SendMessage"
             android:label="Ct_SendMessage">
+
+        </activity>
+
+        <activity
+            android:name=".TableViewActivity"
+            android:label="TableViewActivity">
 
         </activity>
 

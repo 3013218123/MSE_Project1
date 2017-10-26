@@ -10,10 +10,18 @@ import java.util.Set;
 public class ParseData {
     private Message BO_Mse;
     private ArrayList<Signal> Signals;
+    //解析出来的物理值数组
     private double [] phyArray;
-    public ParseData(Message BO_Mse,ArrayList<Signal>Signals,double[] phyArray){//构造函数
+    private String [] dataMatric;
+
+    public String[] getDataMatric() {
+        return dataMatric;
+    }
+
+    public ParseData(Message BO_Mse, ArrayList<Signal>Signals, double[] phyArray,String[] dataMatric){//构造函数
         this.BO_Mse=BO_Mse;
         this.Signals=Signals;
+
         this.phyArray=phyArray;
     }
 

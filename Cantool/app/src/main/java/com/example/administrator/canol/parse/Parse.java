@@ -14,7 +14,7 @@ import com.example.administrator.canol.entity.Signal;
 /**
  * Created by wenhao on 2017/10/18.
  */
-
+//王而川接收消息调用这个函数
 public class Parse {
     public static ParseData parse(String dataStr,String fileName){
         String type=dataStr.substring(0,1);//传来的数据类型
@@ -58,7 +58,7 @@ public class Parse {
             //Log.i("tag",signal.getA()*x+signal.getB()+"");
             index++;
         }
-        ParseData pd=new ParseData(BO_Mse,Signals,phyArray);
+        ParseData pd=new ParseData(BO_Mse,Signals,phyArray,dataMatric);
         return pd;
     }
 

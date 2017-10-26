@@ -11,7 +11,7 @@ import com.example.administrator.canol.entity.Signal;
 /**
  * Created by wenhao on 2017/10/18.
  */
-
+//王而川发送信息函数，
 public class ReverseParse {
 
     public static String reverseParse(String BO_id,double[] userInputPhy,String fileName){

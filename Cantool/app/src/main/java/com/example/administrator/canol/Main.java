@@ -49,7 +49,7 @@ public class Main extends Activity {
 		button3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent=new Intent(Main.this, Jieshou.class);
+				Intent intent=new Intent(Main.this, Jieshou1.class);
 				startActivity(intent);
 
 			}
@@ -68,7 +68,7 @@ public class Main extends Activity {
 		button5.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent=new Intent(Main.this, LEDActivity.class);
+				Intent intent=new Intent(Main.this, Jiazai.class);
 				startActivity(intent);
 
 			}

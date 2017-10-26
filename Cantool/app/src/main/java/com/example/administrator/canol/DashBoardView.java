@@ -46,7 +46,7 @@ public class DashBoardView extends View
 
     private int count=10;//画10根线
 
-    private static int outerR=100;//外部圆环的半径
+    private static int outerR=200;//外部圆环的半径
     private static int innerR=(int)(outerR*0.9f);//内部圆环的半径
 
     private int shortageAngle=60;//缺失部分的角度

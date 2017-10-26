@@ -120,8 +120,8 @@ public class Fasong extends Activity {
             //获取选择的项的值
             String sg;
             String sInfo=adapter.getItemAtPosition(position).toString();
-            if(sInfo.equals("BO1")){
-                sg="sg1:"+"\n"+"sg2:";
+            if(sInfo.equals("BO_61CDU_4:8CDU")){
+                sg="SG_CDU_HVACACCfg[0|3]:"+"\n"+"SG_CDU_HVACAirCirCfg[0|3]:"+"\n"+"SG_CDU_HVACComfortCfg[0|3]:";
             }else if(sInfo.equals("BO2")){
 
                 sg="sg1:"+"\n"+"sg2:"+"\n"+"sg3:";
