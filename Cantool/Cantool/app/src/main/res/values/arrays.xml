@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp">
+        <item>BO_61CDU_4:8CDU</item>
+        <item>BO2</item>
+        <item>BO3</item>
+        <item>BO4</item>
+    </string-array>
+
+    <string-array name="sp1">
+        <item>V\\r</item>
+        <item>O1\\r</item>
+        <item>S0\\r</item>
+        <item>S1\\r</item>
+        <item>S2\\r</item>
+        <item>S3\\r</item>
+        <item>S4\\r</item>
+        <item>S5\\r</item>
+        <item>S6\\r</item>
+        <item>S7\\r</item>
+        <item>S8\\r</item>
+        <item>C\\r</item>
+    </string-array>
+
+    <string-array name="col">
+        <item>#3F51B5</item>
+        <item>#303F9F</item>
+        <item>#FF4081</item>
+        <item>#ffffe0</item>
+        <item>#ffff00</item>
+        <item>#fffacd</item>
+        <item>#ff6347</item>
+        <item>#ff69b4</item>
+        <item>#ff7f50</item>
+        <item>#ff8c00</item>
+        <item>#ffa07a</item>
+        <item>#ffa500</item>
+        <item>#ffb6c1</item>
+        <item>#ffd700</item>
+        <item>#ffb6c1</item>
+        <item>#DAA520</item>
+        <item>#DA70D6</item>
+        <item>#D8BFD8</item>
+        <item>#D2B48C</item>
+        <item>#CD853F</item>
+        <item>#C71585</item>
+        <item>#C0C0C0</item>
+        <item>#BDB76B</item>
+        <item>#BC8F8F</item>
+        <item>#BA55D3</item>
+        <item>#B8860B</item>
+        <item>#B22222</item>
+        <item>#B0E0E6</item>
+        <item>#B0C4DE</item>
+        <item>#AFEEEE</item>
+        <item>#ADFF2F</item>
+    </string-array>
+
+</resources>

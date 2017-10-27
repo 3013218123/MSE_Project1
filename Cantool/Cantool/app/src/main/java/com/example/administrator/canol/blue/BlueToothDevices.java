@@ -270,7 +270,7 @@ public class BlueToothDevices extends Activity {
             _blueToothAdapter.cancelDiscovery();
         }
 
-        //ct_btSocket.StopServer();
+        ct_btSocket.StopServer();
 
         this.unregisterReceiver(mReceiver);
     }
