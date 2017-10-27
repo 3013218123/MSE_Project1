@@ -79,6 +79,12 @@
 
         </activity>
 
+    <activity android:name=".listvieweditview.Sendactivity"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+        >
+
+    </activity>
+
     </application>
 
 </manifest>

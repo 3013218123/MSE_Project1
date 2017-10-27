@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <TextView
+            android:gravity="center"
+            android:textSize="20dp"
+            android:id="@+id/txt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="可以发送的BO类型" />
+
+
+        <RadioGroup
+            android:layout_marginLeft="40dp"
+            android:gravity="left"
+            android:id="@+id/fasongRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1.00">
+
+        </RadioGroup>
+
+
+
+        <Button
+
+            android:id="@+id/selectBoButton"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#00F5FF"
+            android:gravity="center"
+            android:text="确定"></Button>
+
+</LinearLayout>
+
+
+
+
+</ScrollView>
