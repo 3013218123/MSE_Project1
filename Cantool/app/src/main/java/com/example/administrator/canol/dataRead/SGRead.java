@@ -19,8 +19,8 @@ import com.example.administrator.canol.entity.Signal;
 public class SGRead {
     public static ArrayList<Signal>readSG(String BO_id,String fileName){
         ArrayList<Signal> signalArrayList=new ArrayList<>();
-        File file = new File("/data/data/db/"+fileName);//虚拟机调试
-        //File file = new File("storage/sdcard1/db/"+fileName);//真机调试
+        //File file = new File("/data/data/db/"+fileName);//虚拟机调试
+        File file = new File("storage/sdcard1/db/"+fileName);//真机调试
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));//构造一个BufferedReader类来读取文件
             String s = null;
