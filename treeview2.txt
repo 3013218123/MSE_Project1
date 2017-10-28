@@ -1,0 +1,32 @@
+ var  
+  CatNode   :   TTreeNode;   //先建立一个TREEVIEW使用的子对象  
+  begin  
+  TvwTips.SetFocus;   //将焦点置到这个TREEVIEW控件上  
+  {   在根标题下建立一个新的子标题   }  
+  CatNode   :=   TvwTips.Items.AddChild(    
+  TvwTips.Items.GetFirstNode,'New   Category'   );  
+  CatNode.ImageIndex   :=   1;  
+  CatNode.SelectedIndex   :=   2;  
+  CatNode.EditText;   {   允许用户改变这个标题   }  
+  end; 
+  var  
+  ParentNode,   TipNode   :   TTreeNode;   //先建立TREEVIEW使用  
+  的子对象  
+  VersionNum   :   Integer;  
+  begin  
+  TvwTips.SetFocus;   //将焦点置到这个TREEVIEW控件上  
+  VersionNum   :=   TMenuItem(   Sender   ).Tag;   {   Ver   num   of   new   tip   }  
+  ParentNode   :=   TvwTips.Selected;   {   取出当前的选中节点   }  
+  if   ParentNode.Level   =   nlTip   then{   Parent   cannot   be   a   tip   node   }  
+  ParentNode   :=   TvwTips.Selected.Parent;  
+   
+  TipNode   :=   TvwTips.Items.AddChildObject(   ParentNode,'New    
+  Subject',Pointer(   VersionNum   )   );  
+  TipNode.ImageIndex   :=   3;   {   Normal   tip   bitmap   }  
+  TipNode.SelectedIndex   :=   4;   {   Highlighted   tip   bitmap   }  
+  TipNode.MakeVisible;   {   Move   new   tip   node   into   view   }  
+  TipNode.EditText;   {   Immediately   allow   user   to   edit   subject   }  
+  EnableTreeViewFunctions(   TipNode.Level   );  
+  RtfTip.Clear;  
+  RtfTip.Modified   :=   False;  
+  end; 

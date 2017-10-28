@@ -29,7 +29,7 @@ import com.example.administrator.canol.R;
 
 public class BlueToothDevices extends Activity {
 
-    public static Ct_BtSocket ct_btSocket = AppComFun.ct_btSocket;
+    public static Ct_BtSocket ct_btSocket = new Ct_BtSocket();
 
     private BluetoothAdapter _blueToothAdapter;
 
@@ -96,10 +96,40 @@ public class BlueToothDevices extends Activity {
         this._strButton = (Button) findViewById(R.id.btn_str_search);
         this._strButton.setOnClickListener(mSearchListener);
 
+        this._serButton = (Button) findViewById(R.id.btn_str_service);
+        this._serButton.setOnClickListener(mServiceListener);
+
         this._stpButton = (Button) findViewById(R.id.btn_stp_service);
         this._stpButton.setOnClickListener(mStopServiceListener);
 
+
+        this._ceshiButton = (Button) findViewById(R.id.tiaozhuan);
+        this._ceshiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(BlueToothDevices.this, Ct_SendMessage.class);
+                startActivity(intent);
+            }
+        });
+//        mBtnService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                BluetoothActivity.mType = Type.SERVICE;
+//                BluetoothActivity.mTabHost.setCurrentTab(1);
+//            }
+//        });
+
+
     }
+
+    private View.OnClickListener mServiceListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //开启服务
+            ct_btSocket.StartServer();
+        }
+    };
 
     private View.OnClickListener mStopServiceListener = new View.OnClickListener() {
         @Override
@@ -239,12 +269,9 @@ public class BlueToothDevices extends Activity {
         if (_blueToothAdapter != null) {
             _blueToothAdapter.cancelDiscovery();
         }
-<<<<<<< HEAD
-=======
 
-        //ct_btSocket.StopServer();
+        ct_btSocket.StopServer();
 
->>>>>>> c65510c64004d28bfea485cb63dc68ab051ab532
         this.unregisterReceiver(mReceiver);
     }
 
