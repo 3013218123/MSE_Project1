@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.administrator.canol.blue.AppComFun;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
 import com.example.administrator.canol.entity.Signal;
@@ -66,7 +67,7 @@ public class Yibiaopan extends Activity {
         dbv = (DashBoardView) findViewById(R.id.dbv);
         String bo = (String) getIntent().getSerializableExtra("key");
         //strings = new String[]{"t320880478C2F05A1D29A", "t31880300000000000000", "t31D80200000000000000", "t320880478C2F05A1D29A"};
-        filename = "canmsg-sample.dbc";
+        filename = FileName.filename;
         for (int i = strings.size() - 1; i >= 0; i--) {
             ParseData parsedate;
             parsedate = Parse.parse(strings.get(i), filename);

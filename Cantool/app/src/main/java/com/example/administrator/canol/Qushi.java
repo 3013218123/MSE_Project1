@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.administrator.canol.blue.AppComFun;
 import com.example.administrator.canol.data.ChartData;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
 import com.example.administrator.canol.entity.Signal;
@@ -38,7 +39,7 @@ public class Qushi extends Activity {
     private ListView listView;
 
     private String bo = "";
-    private String filename = "canmsg-sample.dbc";
+    private String filename = FileName.filename;
 
     private int lastLength = 0;
     private boolean[] signalchecked;
@@ -67,9 +68,10 @@ public class Qushi extends Activity {
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
-            if (lastLength != strings.size()) {
-                signalchecked = GetCheckedStatus();
-                int count = GetCheckedCount(signalchecked);
+            signalchecked = GetCheckedStatus();
+            int count = GetCheckedCount(signalchecked);
+            if (lastLength != strings.size()||count>0) {
+
                 Update(count);
 
                 android.os.Message msg = new android.os.Message();

@@ -4,134 +4,166 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 
 import android.widget.RadioGroup;
 
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.canol.blue.AppComFun;
+import com.example.administrator.canol.dataRead.SGRead;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
 import com.example.administrator.canol.entity.Signal;
 import com.example.administrator.canol.parse.Parse;
+import com.example.administrator.canol.treeview.bean.Bean;
+import com.example.administrator.canol.treeview.bean.FileBean;
+import com.example.administrator.canol.treeview.tree.Node;
+import com.example.administrator.canol.treeview.tree.TreeListViewAdapter;
+import com.example.administrator.canol.treeview.tree_view.SimpleTreeAdapter;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Jiazai extends AppCompatActivity {
+    //用一个字符串数组来保存一些城市
+    private String[] citise = {"成都", "上海", "北京", "重庆"};
+    private Button loadDatabaseButton;
+    private Spinner spinner;
+    private ArrayAdapter<String> adapter;
+    //真正的字符串数据将保存在这个list中
+    private List<String> all;
+    String current = "";
 
-
-    private Button button;
-    private Button button1;
-    private List<String> list = new ArrayList<String>();
-    private ArrayList<Signal> signals;
-    private String selectText;
-    private String datastrr;
-    private String filename;
-    //private String[] strings;
-    private List<String> strings = AppComFun.ltmp;
-    private  RadioGroup radioGroup;
-
-    private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
-        public void run() {
-            Update();
-            handler.postDelayed(this, 1000 * 5);// 间隔120秒
-        }
-
-    };
+    private List<Bean> mDatas = new ArrayList<Bean>();
+    private ListView mTree;
+    private TreeListViewAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.jiazai);
+        int firstId=1;
+        int secondId = 1000;
+        int thirdId = 1000000;
+        //将字符数组中的对象导入到list中，才能进行动态控制
+        all = new ArrayList<String>();
+        File file = new File("storage/sdcard1/db/");
+        if (file.isDirectory()) {
+            String[] fileList = file.list();
+            for (int i = 0; i < fileList.length; i++) {
+                //一级DB
+                mDatas.add(new Bean(firstId, 0, fileList[i]));
+                all.add(fileList[i]);
+                File fileReader = new File("storage/sdcard1/db/" + fileList[i]);
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(fileReader));//构造一个BufferedReader类来读取文件
+                    String s = null;
+                    while ((s = br.readLine()) != null) {//使用readLine方法，一次读一行
+                        Pattern p = Pattern.compile("BO_ " + ".*");
+                        Matcher m = p.matcher(s);
+                        if (m.matches()) {//找到了一条BO
+                            String[] BO_Array = s.split(" ");
+                            String BO_id = BO_Array[1];
+                            String MessageName = BO_Array[2].substring(0, BO_Array[2].length() - 1);
+                            int DLC = Integer.parseInt(BO_Array[3]);
+                            String NodeName = BO_Array[4];
+                            boolean isTypeTrue = true;
+                            Message message = new Message(BO_id, MessageName, DLC, NodeName);
+                            //二级BO
+                            mDatas.add(new Bean(secondId, firstId, message.getBO_() + message.getId() + message.getMessageName()
+                                    + message.getSeporator() + message.getNodeName()));
 
-        handler.postDelayed(runnable, 1000 * 5);
-        Update();
-    }
 
-    @Override
-    protected void onDestroy() {
-        handler.removeCallbacks(runnable); //停止刷新
-        super.onDestroy();
-    }
+                            ArrayList<Signal> signalArrayList = SGRead.readSG(BO_id, fileList[i]);
+                            for (int j = 0; j < signalArrayList.size(); j++) {
+                                Signal signal = signalArrayList.get(j);
+                                //三级SG
+                                mDatas.add(new Bean(thirdId, secondId, signal.getSG_() + signal.getSignalName() + signal.getSeporator() + signal.getStartBit() + " " + signal.getDataLength()
+                                        + " " + signal.getArrangeType() + " " + signal.getA() + " " + signal.getB() + " " + signal.getC() + " " + signal.getD() + " " + signal.getUnit() + " " + signal.getNodeName()));
+                                thirdId++;
 
+                            }
+                            secondId++;
 
-    public void Update() {
-        button = (Button) findViewById(R.id.jiazai_baocun);
-        button1 = (Button) findViewById(R.id.jiazai_duru);
-        //strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
-        filename = "canmsg-sample.dbc";
-        radioGroup = (RadioGroup) findViewById(R.id.jieshou_r1);
-        radioGroup.removeAllViews();
-        //Parse.parse("t31880300000000000000",filename);
-        //循环开始
-        for (int i = 0; i < strings.size(); i++) {
-            ParseData parsedate;
-            parsedate = Parse.parse(strings.get(i), filename);
-            Message message = parsedate.getBO_Mse();
-            String bo = message.getBO_() + message.getId() + message.getMessageName()
-                    + message.getSeporator() + message.getNodeName();
-            boolean isOnly = true;
-            for (int k = 0; k < i; k++) {
-                if (strings.get(i).charAt(0) == 'T') {
-                    if (strings.get(i).substring(0, 9).equals(strings.get(k).substring(0, 9)))
-                        isOnly = false;
-                } else {
-                    if (strings.get(i).substring(0, 4).equals(strings.get(k).substring(0, 4)))
-                        isOnly = false;
+                        }
+                    }
+                    firstId++;
+                    br.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
-            if (isOnly) {
-                RadioButton radioButton = new RadioButton(this);
 
-                radioButton.setText(bo);
-                radioGroup.addView(radioButton);
+            mTree = (ListView) findViewById(R.id.list_db);
+            try {
+                mAdapter = new SimpleTreeAdapter<Bean>(mTree, this, mDatas, 0);
+                mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
+                    @Override
+                    public void onClick(Node node, int position) {
+                        if (node.isLeaf()) {
+                            Toast.makeText(getApplicationContext(), node.getName(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-
+            mTree.setAdapter(mAdapter);
         }
 
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
+        adapter = new ArrayAdapter<String>(this, R.layout.myspinner, this.all);
+        adapter.setDropDownViewResource(R.layout.myspinner);
+        spinner = (Spinner) findViewById(R.id.loadDatabaseSpinner);
+        spinner.setAdapter(this.adapter);
+        loadDatabaseButton = (Button) findViewById(R.id.loadDatabaseButton);
+        loadDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButtonn;
-                radioButtonn = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
-                selectText = radioButtonn.getText().toString();
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra("key", selectText);
-                        intent.setClass(Jiazai.this, Yibiaopan.class);
-                        startActivity(intent);
-                    }
-                });
-                button1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra("key", selectText);
+            public void onClick(View v) {
+                if (current != "") {
+                    FileName.setFilename(current);
+                }
 
-                        intent.setClass(Jiazai.this, Qushi.class);
-                        startActivity(intent);
-                    }
-                });
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //将textview中这信息变为选择的内容
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                current = arg0.getSelectedItem().toString();
+            }
 
+            public void onNothingSelected(AdapterView<?> arg0) {
 
             }
         });
 
+
     }
-
-
 }

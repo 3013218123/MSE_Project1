@@ -1,5 +1,7 @@
 package com.example.administrator.canol.dataRead;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +34,7 @@ public class SGRead {
                         if(s.length()>3) {
                             String t=s.substring(0,3);
                             if(t.equals(" SG")) {
-                                String[] sArray=s.split(" ");
+                                String[] sArray=s.split(" |  ");
                                 //String SignalName,int startBit,int dataLength,String arrangeType,double A,double B,double C,double D,String unit,String NodeName
                                 String SignalName=sArray[2];
                                 String dataIndexInformation=sArray[4];
@@ -49,7 +51,7 @@ public class SGRead {
                                 double C=Double.parseDouble(CDarray[0]);
                                 double D=Double.parseDouble(CDarray[1]);
                                 String unit=sArray[7];
-                                String NodeName=sArray[9];
+                                String NodeName=sArray[8];
                                 Signal signal=new Signal(SignalName,startBit,dataLength,arrangeType,A,B,C,D,unit,NodeName);
                                 signalArrayList.add(signal);
                             }
@@ -62,6 +64,7 @@ public class SGRead {
 
         }catch(Exception e){
             e.printStackTrace();
+            Log.i("tag","读取"+BO_id+"异常啦");
         }
         return signalArrayList;
     }

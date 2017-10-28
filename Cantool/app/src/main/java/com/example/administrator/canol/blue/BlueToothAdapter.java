@@ -69,7 +69,6 @@ public class BlueToothAdapter extends BaseAdapter {
         return new CharSequence[0];
     }
 
-
     class ViewHolder {
         protected View child;
         protected TextView msg;

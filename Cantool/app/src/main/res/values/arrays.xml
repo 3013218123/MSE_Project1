@@ -8,18 +8,52 @@
     </string-array>
 
     <string-array name="sp1">
-        <item>V\\r</item>
-        <item>O1\\r</item>
-        <item>S0\\r</item>
-        <item>S1\\r</item>
-        <item>S2\\r</item>
-        <item>S3\\r</item>
-        <item>S4\\r</item>
-        <item>S5\\r</item>
-        <item>S6\\r</item>
-        <item>S7\\r</item>
-        <item>S8\\r</item>
-        <item>C\\r</item>
+        <item>V</item>
+        <item>O1</item>
+        <item>S0</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+        <item>S4</item>
+        <item>S5</item>
+        <item>S6</item>
+        <item>S7</item>
+        <item>S8</item>
+        <item>C</item>
+    </string-array>
+
+    <string-array name="col">
+        <item>#800000</item>
+        <item>#303F9F</item>
+        <item>#FF4081</item>
+        <item>#32CD32</item>
+        <item>#ffff00</item>
+        <item>#66CDAA</item>
+        <item>#ff6347</item>
+        <item>#9370DB</item>
+        <item>#ff7f50</item>
+        <item>#ff8c00</item>
+        <item>#8B4513</item>
+        <item>#9ACD32</item>
+        <item>#BDB76B</item>
+        <item>#ffd700</item>
+        <item>#ffb6c1</item>
+        <item>#DAA520</item>
+        <item>#DA70D6</item>
+        <item>#228B22</item>
+        <item>#D2B48C</item>
+        <item>#CD853F</item>
+        <item>#C71585</item>
+        <item>#32CD32</item>
+        <item>#BDB76B</item>
+        <item>#BC8F8F</item>
+        <item>#BA55D3</item>
+        <item>#B8860B</item>
+        <item>#B22222</item>
+        <item>#FF4500</item>
+        <item>#B0C4DE</item>
+        <item>#AFEEEE</item>
+        <item>#A0522D</item>
     </string-array>
 
 

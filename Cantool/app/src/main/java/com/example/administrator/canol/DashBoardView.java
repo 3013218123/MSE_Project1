@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -228,53 +229,50 @@ public class DashBoardView extends View
     //绘制指针
     private void drawArrow(Canvas canvas)
     {
-        double f=Math.toRadians(aimSweepAngel+startAngle);
-        nowX=(float)Math.cos(f)*arrowLength;
-        nowY=(float)Math.sin(f)*arrowLength;
+        double f = Math.toRadians(aimSweepAngel + startAngle);
 
-        arrowPath=new Path();
+        nowX = (float) Math.cos(f) * arrowLength;
+        nowY = (float) Math.sin(f) * arrowLength;
+
+        arrowPath = new Path();
         arrowPath.reset();
 
-        arrowPath.moveTo(0,0);
-        arrowPath.lineTo(nowX,nowY);
+        arrowPath.moveTo(0, 0);
+        arrowPath.lineTo(nowX, nowY);
 
-        canvas.drawPath(arrowPath,arrowPaint);
+        canvas.drawPath(arrowPath, arrowPaint);
     }
 
     //绘制指针指向的值
     private void drawAimText(Canvas canvas)
     {
-        canvas.drawText(formatDouble(aimValue)+"",-10,outerR,textPaint2);
+        DecimalFormat df = new DecimalFormat("######0.000");
+        double d1 = aimValue;
+
+        canvas.drawText(df.format(d1), -10, outerR, textPaint2);
     }
 
     //绘制仪表盘刻度值
-    private void drawText(Canvas canvas)
-    {
+    private void drawText(Canvas canvas) {
         float angle = startAngle;
         double value = startValue;
+        DecimalFormat df = new DecimalFormat("######0.000");
 
-        for(int i=0;i<=textCount;i++)
-        {
-            angle=startAngle+sweepAngle/textCount*i;
-            value=startValue+formatFloat((endValue-startValue)/textCount)*i;
+        for (int i = 0; i <= textCount; i++) {
+            angle = startAngle + sweepAngle / textCount * i;
+            value = startValue + formatFloat((endValue - startValue) / textCount) * i;
 
-            if(isColorful)
-            {
-                if(i<=count/5)
-                {
+            if (isColorful) {
+                if (i <= count / 5) {
                     textPaint.setColor(Color.GREEN);
-                }
-                else if (i>count-count/5)
-                {
+                } else if (i > count - count / 5) {
                     textPaint.setColor(Color.RED);
-                }
-                else
-                {
+                } else {
                     textPaint.setColor((Color.BLUE));
                 }
             }
 
-            daftest(canvas, angle, value + "");
+            daftest(canvas, angle, df.format(value));
         }
     }
 
@@ -311,11 +309,15 @@ public class DashBoardView extends View
     }
 
     //根据值转换成角度 再转换成坐标
-    public void setArrowData(double f)
-    {
+    public void setArrowData(double f) {
         aimValue = f;
         double percent = (aimValue - startValue) / (endValue - startValue);
-        double angel = percent * sweepAngle;
+        double angel = 0.0;
+        if (percent > 1.0) {
+            angel = sweepAngle + 10;
+        } else {
+            angel = percent * sweepAngle;
+        }
         aimSweepAngel = angel;
     }
 

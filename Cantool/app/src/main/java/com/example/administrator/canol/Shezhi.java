@@ -14,7 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.administrator.canol.blue.AppComFun;
+import com.example.administrator.canol.data.ControlData;
 
 public class Shezhi extends Activity {
     private Spinner shezhi_xiala;
@@ -26,6 +30,7 @@ public class Shezhi extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shezhi);
 
+
         shezhi_xiala=(Spinner) this.findViewById(R.id.shezhi_xiala);
         button=(Button) this.findViewById(R.id.shezhi_fasong);
 
@@ -36,10 +41,20 @@ public class Shezhi extends Activity {
             @Override
             public void onClick(View v) {
                 String num1=shezhi_xiala.getSelectedItem().toString();
-                num1=num1+"\r";
-                Toast toast=Toast.makeText(getApplicationContext(),num1,Toast.LENGTH_SHORT);
-                toast.show();
+                String gangR=asciiToString("13");
+                num1=num1+gangR;
+
+                AppComFun.ct_btSocket.CtSendMessage(num1);
             }
         });
+    }
+    public static String asciiToString(String value)
+    {
+        StringBuffer sbu = new StringBuffer();
+        String[] chars = value.split(",");
+        for (int i = 0; i < chars.length; i++) {
+            sbu.append((char) Integer.parseInt(chars[i]));
+        }
+        return sbu.toString();
     }
 }

@@ -30,6 +30,9 @@ public class ReverseParse {
             //填充数据矩阵，从而得到DD
             //1.计算信号量x,int型,x2表示2进制信号量
             int x=(int)((userInputPhy[index]-signal.getB())/signal.getA());
+            if(x<0) {
+                continue;
+            }
             String x2=Integer.toBinaryString(x);
             int m=signal.getDataLength()-x2.length();
             for(int i=0;i<m;i++) {//补足位数
@@ -47,6 +50,7 @@ public class ReverseParse {
                     x2=strLeft+x2+strRight;
                     data[startRow]=x2;
                     tempMaxRow=startRow;
+
                 }else{
                     int row=(signal.getDataLength()-emptyBit)/8;//剩余行数
                     int c=(signal.getDataLength()-emptyBit)%8;//最后一行的个数

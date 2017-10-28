@@ -33,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.example.administrator.canol.dataRead.BOReadAll;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.listvieweditview.Sendactivity;
 
@@ -48,7 +49,7 @@ public class Fasong extends Activity {
         selectBoButton=findViewById(R.id.selectBoButton);
 
 
-        String filename = "canmsg-sample.dbc";
+        String filename = FileName.filename;
         radioGroup = (RadioGroup) findViewById(R.id.fasongRadioGroup);
         radioGroup.removeAllViews();
         ArrayList<Message> messageArrayList= BOReadAll.readBoAll(filename);

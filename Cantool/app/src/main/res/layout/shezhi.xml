@@ -1,106 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    >
-    <TableRow
-
-        android:gravity="center"
-
-        android:background="#F0F0F0"
-        android:layout_marginBottom="50dp"
-        android:layout_height="wrap_content">
-
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
         <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/TextView1"
             android:layout_gravity="center"
             android:text="CanTool"
             android:textSize="30sp"
             />
-    </TableRow>
-
-        //android:stretchColumns="0,3"
-
-    <TableRow
-
-        android:gravity="center"
-
-
-        android:layout_marginBottom="50dp"
-        android:layout_height="wrap_content">
-
-
-
-            <TextView
-
-                android:text="命令："
-
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                android:textSize="34px"
-
-                />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F0F0F0"
-                android:id="@+id/shezhi_xiala"
-                android:entries="@array/sp1"
-                />
-
-            <TextView />
-
-        </TableRow>
-
-
-
-    <TableRow
-
-        android:gravity="center"
-
-
-        android:layout_marginBottom="50dp"
-        android:layout_height="wrap_content">
-
-
-
-            <Button
-
-                android:id="@+id/shezhi_fasong"
-
-                android:text="发送"
-
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                />
-
-            <TextView />
-
-            <TextView />
-
-        </TableRow>
-    <TableRow
-        android:gravity="center"
-        android:layout_gravity="bottom">
 
         <TextView
-
-            android:id="@+id/TextVi"
+            android:gravity="center"
+            android:text="请选择命令："
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            />
+        <Spinner
+            android:gravity="center"
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#98FB98"
+            android:id="@+id/shezhi_xiala"
+            android:entries="@array/sp1" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/shezhiTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:orientation="vertical">
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/shezhi_fasong"
+            android:text="发送"
+            android:textSize="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+        <TextView
+            android:id="@+id/TextVi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#F0F0F0"
             android:gravity="center"
             android:text="17软件第八组"
             android:textSize="20sp" />
-    </TableRow>
+    </LinearLayout>
 
+</LinearLayout>
 
-
-</TableLayout>

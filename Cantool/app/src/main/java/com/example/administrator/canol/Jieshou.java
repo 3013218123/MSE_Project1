@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.administrator.canol.blue.AppComFun;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
 import com.example.administrator.canol.entity.Signal;
@@ -68,7 +69,7 @@ public class Jieshou extends AppCompatActivity {
         button1 = (Button) findViewById(R.id.jieshou_wuli);
         btn_canlayout = (Button) findViewById(R.id.btn_can_layout);
         //strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
-        filename = "canmsg-sample.dbc";
+        filename = FileName.filename;
         radioGroup = (RadioGroup) findViewById(R.id.jieshou_r1);
         radioGroup.removeAllViews();
         //Parse.parse("t31880300000000000000",filename);

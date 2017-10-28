@@ -40,11 +40,15 @@ public class Parse {
             numOfDD=Integer.parseInt(dataStr.substring(4,5));
             totalDD=dataStr.substring(5,5+numOfDD*2);
         }
-        String dataMatric[]=new String[numOfDD];
+        String dataMatric[]=new String[8];
+
         String tempTotalDD=totalDD;
         for(int i=0;i<numOfDD;i++){
             dataMatric[i]=hexString2binaryString(tempTotalDD.substring(0,2));
             tempTotalDD=tempTotalDD.substring(2,tempTotalDD.length());
+        }
+        for(int i=numOfDD;i<8;i++){
+            dataMatric[i]="00000000";
         }
         Message BO_Mse= BORead.readBO(id,fileName);
         ArrayList<Signal> Signals= SGRead.readSG(id,fileName);
@@ -53,8 +57,12 @@ public class Parse {
         for(Iterator it = Signals.iterator(); it.hasNext(); )
         {
             Signal  signal= (Signal) it.next();
-            int x=Integer.parseInt(analysis( signal.getStartBit(),signal.getDataLength(),dataMatric,signal.getArrangeType() ),2);//该信号的物理值
-            phyArray[index]=signal.getA()*x+signal.getB();
+            String analysis=analysis( signal.getStartBit(),signal.getDataLength(),dataMatric,signal.getArrangeType() );
+            if(!analysis.equals("")){
+                int x=Integer.parseInt(analysis,2);//该信号的物理值
+                phyArray[index]=signal.getA()*x+signal.getB();
+            }
+
             //Log.i("tag",signal.getA()*x+signal.getB()+"");
             index++;
         }

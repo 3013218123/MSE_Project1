@@ -51,7 +51,7 @@ public abstract class TreeListViewAdapter<T> extends BaseAdapter
 	 * @param mTree
 	 * @param context
 	 * @param datas
-	 * @param defaultExpandLevel
+	 * @param defaultExpandLevel;
 	 *            默认展开几级树
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException

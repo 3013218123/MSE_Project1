@@ -21,7 +21,7 @@ public class ParseData {
     public ParseData(Message BO_Mse, ArrayList<Signal>Signals, double[] phyArray,String[] dataMatric){//构造函数
         this.BO_Mse=BO_Mse;
         this.Signals=Signals;
-
+        this.dataMatric=dataMatric;
         this.phyArray=phyArray;
     }
 

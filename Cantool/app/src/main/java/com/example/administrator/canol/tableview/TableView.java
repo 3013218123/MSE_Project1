@@ -11,7 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.example.administrator.canol.R;
 import com.example.administrator.canol.blue.AppComFun;
 
 /**
@@ -91,7 +91,9 @@ public class TableView extends ViewGroup {
                 view.setTextColor(Color.rgb(0, 0, 0));
                 view.setGravity(Gravity.CENTER);
 
-                view.setBackgroundColor(Color.rgb(255, 255, 255));
+                int color = Color.parseColor("#E6E6FA");
+
+                view.setBackgroundColor(color);
 
                 this.addView(view);
             }
@@ -147,13 +149,33 @@ public class TableView extends ViewGroup {
                     String tmp = child.getText().toString();
                     int tp = Integer.parseInt(tmp);
                     if (tp == cc) {
-                        child.setBackgroundColor(Color.rgb(255, 0, 0));
+                        child.setBackgroundColor(Color.rgb(96, 96, 96));
                         break;
                     }
                 }
             }
         }
 
+    }
+
+    public void CanSignalLayout(int[][] dataMatric, int[][] colorMatric) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 7; j >= 0; j--) {
+                TextView child = tv[i][j];
+                if (colorMatric[i][7 - j] != 0) {
+                    int temp = colorMatric[i][7 - j];
+
+                    String[] items = getResources().getStringArray(R.array.col);
+
+                    int color = Color.parseColor(items[temp]);
+                    child.setBackgroundColor(color);
+                    child.setText(dataMatric[i][7 - j] + "  " + ((i * 8) + 7 - j));
+                } else {
+                    child.setBackgroundColor(Color.WHITE);
+                    child.setText(dataMatric[i][7 - j] + "  " + ((i * 8) + 7 - j));
+                }
+            }
+        }
     }
 
     private int[][] Calculation() {

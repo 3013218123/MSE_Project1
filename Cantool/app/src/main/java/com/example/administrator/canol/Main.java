@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.administrator.canol.blue.BlueToothDevices;
+import com.example.administrator.canol.entity.FileName;
+
+import java.io.File;
 
 
 public class Main extends Activity {
@@ -24,7 +27,6 @@ public class Main extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
 		Button button1 = (Button) findViewById(R.id.button1);
 		Button button2 = (Button) findViewById(R.id.button2);
 		Button button3 = (Button) findViewById(R.id.button3);

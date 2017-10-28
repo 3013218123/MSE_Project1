@@ -7,14 +7,18 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.administrator.canol.Save.SaveCsv;
 import com.example.administrator.canol.blue.AppComFun;
+import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
 import com.example.administrator.canol.entity.Signal;
+import com.example.administrator.canol.parse.JudgeStr;
 import com.example.administrator.canol.parse.Parse;
 import com.example.administrator.canol.treeview.bean.Bean;
 import com.example.administrator.canol.treeview.bean.FileBean;
@@ -35,10 +39,11 @@ public class Jieshou1 extends Activity {
     private ListView mTree;
     private TreeListViewAdapter mAdapter;
     private Button variousBt;
-
+    private Button saveCSVButton;
+    private EditText saveCSVEditview;
     private List<String> strings = AppComFun.ltmp;
     //String[] strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
-    String filename = "canmsg-sample.dbc";
+    String filename = FileName.filename;
     int sonId = 1001;
     int parentId = 1;
     int lastLength=0;
@@ -66,6 +71,16 @@ public class Jieshou1 extends Activity {
                 Intent intent = new Intent();
                 intent.setClass(Jieshou1.this, Jieshou.class);
                 startActivity(intent);
+            }
+        });
+        saveCSVEditview=findViewById(R.id.saveCSVName);
+        saveCSVEditview.clearFocus();
+        saveCSVButton=findViewById(R.id.saveCSVButton);
+        saveCSVButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String saveCSVName=saveCSVEditview.getText().toString();
+                SaveCsv.writeAll(saveCSVName,strings,filename);
             }
         });
         handler.postDelayed(runnable, 1000 * 5);
@@ -124,7 +139,7 @@ public class Jieshou1 extends Activity {
 
         mTree = (ListView) findViewById(R.id.jieshou_1);
         try {
-            mAdapter = new SimpleTreeAdapter<Bean>(mTree, this, mDatas, 30);
+            mAdapter = new SimpleTreeAdapter<Bean>(mTree, this, mDatas, 0);
             mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
                 @Override
                 public void onClick(Node node, int position) {

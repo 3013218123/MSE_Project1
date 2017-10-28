@@ -6,6 +6,11 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.TextView;
+
+import com.example.administrator.canol.data.ControlData;
+import com.example.administrator.canol.parse.JudgeStr;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -271,6 +276,10 @@ public class Ct_BtSocket {
 
                 _handler.sendMessage(msg);
 
+                //启动数据线程
+                _btReadThread = new DataThread();
+                _btReadThread.start();
+
 
             } catch (IOException e) {
 
@@ -292,10 +301,10 @@ public class Ct_BtSocket {
             InputStream is = null;
 
             try {
-                //is = _btClientSocket.getInputStream();
-
-                is = _ceshi.getInputStream();
-
+                is = _btClientSocket.getInputStream();
+                String gangR="\\r";//用于手机测试
+                //String gangR=asciiToString("13");
+                String lastStr="";
                 while (true) {
                     if ((bytes = is.read(buffer)) > 0) {
                         byte[] buf_data = new byte[bytes];
@@ -305,9 +314,53 @@ public class Ct_BtSocket {
                         }
 
                         //将byte数据转化为字符串
-                        String s = new String(buf_data);
+                       // String s = new String(buf_data);
+                        String s = lastStr+new String(buf_data);
+                        while(s.indexOf("\\BEL")!=-1){
+                            int m=s.indexOf("\\BEL");
+                            String left=s.substring(0,m);
+                            s=left+s.substring(m+4,s.length());
+                            ControlData.returnData="\\BEL";
+                            Log.i("tag",ControlData.returnData);
+                        }
+                        while (s.indexOf(gangR)!=-1){
+                            int index=s.indexOf(gangR);
+                            String dataStr=s.substring(0,index);
+                            if(JudgeStr.isQualifiedStr(dataStr)){
+                                AppComFun.ltmp.add(dataStr);
+                                s=s.substring(index+1,s.length());
+                            }else{
+                                String left=s.substring(0,index);
+                                if(left.indexOf("SV")!=-1){
+                                    ControlData.returnData=left.substring(left.indexOf("SV"),left.length());
+                                    Log.i("tag",ControlData.returnData);
+                                    left=left.substring(0,left.indexOf("SV"));
+                                }else{
+                                    if(left.lastIndexOf("t")!=-1||left.lastIndexOf("T")!=-1){
+                                        int m=left.lastIndexOf("t");
+                                        if(m<left.lastIndexOf("T")) m=left.lastIndexOf("T");//m是最后一个t/T的坐标
+                                        left=left.substring(m,left.length());
+                                        if(JudgeStr.isQualifiedStr(left)){
+                                            AppComFun.ltmp.add(left);
+                                           left="";
+                                        }else {
+                                            ControlData.returnData=gangR;
+                                            Log.i("tag",ControlData.returnData);
+                                        }
+                                    }else {
+                                        ControlData.returnData=gangR;
+                                        Log.i("tag",ControlData.returnData);
+                                    }
 
-                        AppComFun.ltmp.add(s);
+                                }
+
+                                s=left+s.substring(index+1,s.length());
+                            }
+
+
+                        }
+                        lastStr=s;
+                        //AppComFun.ltmp.add(s);
 
 //                        Message msg = new Message();
 //                        msg.obj = s;
@@ -334,5 +387,13 @@ public class Ct_BtSocket {
 
         }
     }
-
+    public static String asciiToString(String value)
+    {
+        StringBuffer sbu = new StringBuffer();
+        String[] chars = value.split(",");
+        for (int i = 0; i < chars.length; i++) {
+            sbu.append((char) Integer.parseInt(chars[i]));
+        }
+        return sbu.toString();
+    }
 }
