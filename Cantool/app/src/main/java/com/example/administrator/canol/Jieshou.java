@@ -78,7 +78,7 @@ public class Jieshou extends AppCompatActivity {
             ParseData parsedate;
             parsedate = Parse.parse(strings.get(i), filename);
             Message message = parsedate.getBO_Mse();
-            String bo = message.getBO_() + message.getId() + message.getMessageName()
+            String bo = message.getBO_()+" "+ message.getId() +" "+ message.getMessageName()
                     + message.getSeporator() + message.getNodeName();
             boolean isOnly = true;
             for (int k = 0; k < i; k++) {

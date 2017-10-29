@@ -24,6 +24,23 @@ public class Shezhi extends Activity {
     private Spinner shezhi_xiala;
     private Button button;
 
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            if(ControlData.returnData!=""){
+                String gangR=asciiToString("13");
+                if(ControlData.returnData.equals(gangR)){
+                    Toast.makeText(Shezhi.this, "设置成功", Toast.LENGTH_LONG).show();
+                }else if(ControlData.returnData.equals("\\BEL")){
+                    Toast.makeText(Shezhi.this, "设置失败", Toast.LENGTH_LONG).show();
+                }
+                ControlData.returnData="";
+            }
+
+
+            handler.postDelayed(this, 1000 * 3);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +48,8 @@ public class Shezhi extends Activity {
         setContentView(R.layout.shezhi);
 
 
-        shezhi_xiala=(Spinner) this.findViewById(R.id.shezhi_xiala);
-        button=(Button) this.findViewById(R.id.shezhi_fasong);
+        shezhi_xiala = (Spinner) this.findViewById(R.id.shezhi_xiala);
+        button = (Button) this.findViewById(R.id.shezhi_fasong);
 
         shezhi_xiala.getSelectedItem();
 
@@ -40,13 +57,15 @@ public class Shezhi extends Activity {
 
             @Override
             public void onClick(View v) {
-                String num1=shezhi_xiala.getSelectedItem().toString();
-                String gangR=asciiToString("13");
-                num1=num1+gangR;
+                String num1 = shezhi_xiala.getSelectedItem().toString();
+                String gangR = asciiToString("13");
+                num1 = num1 + gangR;
 
                 AppComFun.ct_btSocket.CtSendMessage(num1);
             }
         });
+
+        handler.postDelayed(runnable, 1000 * 3);
     }
     public static String asciiToString(String value)
     {

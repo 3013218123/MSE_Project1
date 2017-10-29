@@ -72,7 +72,7 @@ public class Yibiaopan extends Activity {
             ParseData parsedate;
             parsedate = Parse.parse(strings.get(i), filename);
             Message message = parsedate.getBO_Mse();
-            String bo_current = message.getBO_() + message.getId() + message.getMessageName()
+            String bo_current = message.getBO_() + " "+message.getId() + " "+message.getMessageName()
                     + message.getSeporator() + message.getNodeName();
             if (bo.equals(bo_current)) {
                 signals = parsedate.getSignals();

@@ -81,11 +81,16 @@
 
         </activity>
 
+        <activity android:name=".convert.ConvertActivity">
+
+        </activity>
+
         <activity
             android:name=".TableViewActivity"
             android:label="TableViewActivity">
 
         </activity>
+
 
     <activity android:name=".listvieweditview.Sendactivity"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan">

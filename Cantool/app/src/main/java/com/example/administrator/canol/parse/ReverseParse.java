@@ -5,7 +5,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.example.administrator.canol.dataRead.BORead;
 import com.example.administrator.canol.dataRead.SGRead;
+import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.Signal;
 
 /**
@@ -100,9 +102,13 @@ public class ReverseParse {
         }
         //需要知道使用了前多少字节，如果小于8，后面的字节不要了
         //使用了0-maxRow行
-
         String DD="";
         int numDD=maxRow+1;
+
+        //bo信息中有DLC 应该按照这个设置长度
+        Message mse= BORead.readBO(BO_id,fileName);
+        numDD=mse.getDLC();
+
         for(int j=0;j<numDD;j++) {
             DD=DD+binaryString2hexString(data[j]);
         }

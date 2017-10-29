@@ -80,7 +80,12 @@ public class Jieshou1 extends Activity {
             @Override
             public void onClick(View v) {
                 String saveCSVName=saveCSVEditview.getText().toString();
-                SaveCsv.writeAll(saveCSVName,strings,filename);
+                boolean saveResult=SaveCsv.writeAll(saveCSVName,strings,filename);
+                if(saveResult){
+                    Toast.makeText(Jieshou1.this, "保存成功！", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(Jieshou1.this, "保存失败！", Toast.LENGTH_LONG).show();
+                }
             }
         });
         handler.postDelayed(runnable, 1000 * 5);

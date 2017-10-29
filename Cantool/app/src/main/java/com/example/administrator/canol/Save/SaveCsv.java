@@ -83,32 +83,38 @@ public class SaveCsv {
             throw new RuntimeException("You should call open() before flush()");
         }
     }
-    public static void writeAll(String fileNewName, List<String> dataStrArray, String dataBaseName){
-        open(fileNewName);
-        for(int i=0;i<dataStrArray.size();i++){
-            ParseData pd = Parse.parse(dataStrArray.get(i),dataBaseName);
-            Message mse=pd.getBO_Mse();
-            ArrayList<Signal> signalArrayList=pd.getSignals();
-            double [] phyArray=pd.getPhyArray();
-            String boAllInf=mse.getBO_()+mse.getId()+mse.getMessageName()+mse.getSeporator()+mse.getDLC()+mse.getNodeName();
-            writeCsv(""+(i+1),dataStrArray.get(i),boAllInf,"","");
-            for(int k=0;k<signalArrayList.size();k++){
-                Signal signal=signalArrayList.get(k);
+    public static boolean writeAll(String fileNewName, List<String> dataStrArray, String dataBaseName){
+        try{
+            open(fileNewName);
+            for(int i=0;i<dataStrArray.size();i++){
+                ParseData pd = Parse.parse(dataStrArray.get(i),dataBaseName);
+                Message mse=pd.getBO_Mse();
+                ArrayList<Signal> signalArrayList=pd.getSignals();
+                double [] phyArray=pd.getPhyArray();
+                String boAllInf=mse.getBO_()+mse.getId()+mse.getMessageName()+mse.getSeporator()+mse.getDLC()+mse.getNodeName();
+                writeCsv(""+(i+1),dataStrArray.get(i),boAllInf,"","");
+                for(int k=0;k<signalArrayList.size();k++){
+                    Signal signal=signalArrayList.get(k);
 
-                String nodeString=signal.getNodeName();
-                while(nodeString.indexOf(",")!=-1){
-                    String left=nodeString.substring(0,nodeString.indexOf(","));
-                    String right=nodeString.substring(nodeString.indexOf(",")+1,nodeString.length());
-                    nodeString=left+" "+right;
+                    String nodeString=signal.getNodeName();
+                    while(nodeString.indexOf(",")!=-1){
+                        String left=nodeString.substring(0,nodeString.indexOf(","));
+                        String right=nodeString.substring(nodeString.indexOf(",")+1,nodeString.length());
+                        nodeString=left+" "+right;
+                    }
+                    Log.i("tag",nodeString);
+                    String sgAllInf=signal.getSG_()+signal.getSignalName()+signal.getSeporator()+signal.getStartBit()+" "+signal.getDataLength()
+                            +" "+signal.getArrangeType() +" "+signal.getA()+signal.getB()+signal.getC()+signal.getD()+signal.getUnit()+nodeString;
+
+                    writeCsv(" "," "," ",sgAllInf,""+phyArray[k]);
                 }
-                Log.i("tag",nodeString);
-                String sgAllInf=signal.getSG_()+signal.getSignalName()+signal.getSeporator()+signal.getStartBit()+" "+signal.getDataLength()
-                        +" "+signal.getArrangeType() +" "+signal.getA()+signal.getB()+signal.getC()+signal.getD()+signal.getUnit()+nodeString;
-
-                writeCsv(" "," "," ",sgAllInf,""+phyArray[k]);
             }
+            flush();
+            return true;
+        }catch (Exception e){
+            return false;
         }
-        flush();
+
     }
 
 

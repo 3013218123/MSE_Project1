@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.administrator.canol.blue.AppComFun;
 import com.example.administrator.canol.data.ChartData;
+import com.example.administrator.canol.dataRead.BORead;
+import com.example.administrator.canol.dataRead.SGRead;
 import com.example.administrator.canol.entity.FileName;
 import com.example.administrator.canol.entity.Message;
 import com.example.administrator.canol.entity.ParseData;
@@ -47,6 +49,7 @@ public class Qushi extends Activity {
     private ArrayList<ArrayList<Double>> tarr;
     private ArrayList<String> xRawDatas;
     private ArrayList<Double> tmp1;
+    String tStr="";
 
     private Handler mHandler = new Handler() {
         @Override
@@ -94,30 +97,32 @@ public class Qushi extends Activity {
         lineGraphicView = findViewById(R.id.linegraph);
 
         bo = (String) getIntent().getSerializableExtra("key");
+        String [] boArrays=bo.split(" ");
+        String bo_id=boArrays[1];
+
+        if(Integer.parseInt(bo_id)>Integer.MAX_VALUE){
+            String tid=""+decimalToHex(Long.parseLong(bo_id));
+            tStr="T"+tid;
+        }else{
+            String tid=""+decimalToHex(Integer.parseInt(bo_id));
+            while(tid.length()<3){
+                tid="0"+tid;
+            }
+            tStr="t"+tid;
+
+        }
+
+
         //构建listview
         final List<DataHolder> dataList = new ArrayList<DataHolder>();
-        for (int i = 0; i < strings.size(); i++) {
-            ParseData parsedate = Parse.parse(strings.get(i), filename);
-            Message message = parsedate.getBO_Mse();
-            String bo_current = message.getBO_() + message.getId() + message.getMessageName() + message.getSeporator() + message.getNodeName();
-
-            if (bo.equals(bo_current)) { //当前字符串是用户所选BO类型
-                ArrayList<Signal> signals = parsedate.getSignals();
-
-                //构造listview数据
-                for (int k = 0; k < signals.size(); k++) {
-                    Signal signal = signals.get(k);
-                    dataList.add(new DataHolder(signal.getSignalName(), ""));
-                }
-                ArrayList<Signal> signalArrayList = parsedate.getSignals();
-                for (int j = 0; j < signalArrayList.size(); j++) {
-                    maxArray.add(signalArrayList.get(j).getD());
-                }
-
-                break;
-            }
-            //break;
+        ArrayList<Signal> signals = SGRead.readSG(bo_id,filename);
+        //构造listview数据
+        for (int k = 0; k < signals.size(); k++) {
+            Signal signal = signals.get(k);
+            dataList.add(new DataHolder(signal.getSignalName(), ""));
+            maxArray.add(signal.getD());
         }
+
         //绑定listview的适配器
         ListitemAdapter adapter = new ListitemAdapter(Qushi.this, dataList);
         listView = (ListView) findViewById(R.id.list);
@@ -127,16 +132,16 @@ public class Qushi extends Activity {
     }
 
     private void Update(int count) {
-
         ArrayList<double[]> phyArrayArraylist = new ArrayList<>();
-        for (int i = 0; i < strings.size(); i++) {
-            ParseData parsedate = Parse.parse(strings.get(i), filename);
-            Message message = parsedate.getBO_Mse();
-            String bo_current = message.getBO_() + message.getId() + message.getMessageName() + message.getSeporator() + message.getNodeName();
-
-            if (bo.equals(bo_current)) { //当前字符串是用户所选BO类型
-                double[] phyArray = parsedate.getPhyArray();
-                phyArrayArraylist.add(phyArray);
+        int tp=0;
+        for (int i = strings.size()-1; i>=0 ; i--) {
+            if (strings.get(i).indexOf(tStr)!=-1) {
+                tp++;
+                if(tp<=6){
+                    ParseData parsedate = Parse.parse(strings.get(i), filename);
+                    double[] phyArray = parsedate.getPhyArray();
+                    phyArrayArraylist.add(phyArray);
+                }
 
             }
         }
@@ -167,15 +172,17 @@ public class Qushi extends Activity {
         tarr = new ArrayList<ArrayList<Double>>();
         for (int i = 0; i < count; i++) {
             ArrayList arr = new ArrayList<Double>();
-            for (int j = 0; j < phyArrayArraylist.size(); j++) {
+            for (int j = phyArrayArraylist.size()-1; j >=0 ; j--) {
                 arr.add(temp[i][j]);
             }
             tarr.add(arr);
         }
 
         xRawDatas = new ArrayList<String>();
-        for (int i = 0; i < phyArrayArraylist.size(); i++) {
-            xRawDatas.add(String.valueOf(i));
+        int m=tp-6;
+        if(m<0) m=0;
+        for (int i = (tp-1); i >=m; i--) {
+            xRawDatas.add(String.valueOf(tp-i));
         }
 
         //需要各组信号值的最大值.
@@ -208,6 +215,23 @@ public class Qushi extends Activity {
         return count;
     }
 
+
+    public static String decimalToHex(long decimal) {
+        String hex = "";
+        while(decimal != 0) {
+            long hexValue = decimal % 16;
+            hex = toHexChar(hexValue) + hex;
+            decimal = decimal / 16;
+        }
+        return  hex;
+    }
+    //将0~15的十进制数转换成0~F的十六进制数
+    public static char toHexChar(long hexValue) {
+        if(hexValue <= 9 && hexValue >= 0)
+            return (char)(hexValue + '0');
+        else
+            return (char)(hexValue - 10 + 'A');
+    }
 }
 
 
