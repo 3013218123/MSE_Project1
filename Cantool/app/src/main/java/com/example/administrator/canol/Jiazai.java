@@ -148,6 +148,7 @@ public class Jiazai extends AppCompatActivity {
             public void onClick(View v) {
                 if (current != "") {
                     FileName.setFilename(current);
+                    Toast.makeText(Jiazai.this, "数据库转换成功", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -37,7 +37,12 @@ public class SaveCsv {
 
         File fileRobo = new File(folderName);
         if(!fileRobo.exists()){
-            fileRobo.mkdir();
+            try {
+                fileRobo.mkdir();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
         mFileName = folderName + newFileName;
         mStringBuilder = new StringBuilder();
@@ -85,6 +90,9 @@ public class SaveCsv {
     }
     public static boolean writeAll(String fileNewName, List<String> dataStrArray, String dataBaseName){
         try{
+            if(fileNewName.indexOf(".csv")==-1){
+                return false;
+            }
             open(fileNewName);
             for(int i=0;i<dataStrArray.size();i++){
                 ParseData pd = Parse.parse(dataStrArray.get(i),dataBaseName);
@@ -110,11 +118,11 @@ public class SaveCsv {
                 }
             }
             flush();
-            return true;
+
         }catch (Exception e){
             return false;
         }
-
+        return true;
     }
 
 

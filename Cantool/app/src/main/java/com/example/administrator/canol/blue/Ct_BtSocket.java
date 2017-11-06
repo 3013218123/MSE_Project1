@@ -302,8 +302,10 @@ public class Ct_BtSocket {
 
             try {
                 is = _btClientSocket.getInputStream();
-                String gangR="\\r";//用于手机测试
-                //String gangR=asciiToString("13");
+                //String gangR="\\r";//用于手机测试
+                //String gangBEL="\\BEL";
+                String gangR=asciiToString("13");
+                String gangBEL=asciiToString("7");
                 String lastStr="";
                 while (true) {
                     if ((bytes = is.read(buffer)) > 0) {
@@ -316,10 +318,10 @@ public class Ct_BtSocket {
                         //将byte数据转化为字符串
                        // String s = new String(buf_data);
                         String s = lastStr+new String(buf_data);
-                        while(s.indexOf("\\BEL")!=-1){
-                            int m=s.indexOf("\\BEL");
+                        while(s.indexOf(gangBEL)!=-1){
+                            int m=s.indexOf(gangBEL);
                             String left=s.substring(0,m);
-                            s=left+s.substring(m+4,s.length());
+                            s=left+s.substring(m+1,s.length());
                             ControlData.returnData="\\BEL";
                             Log.i("tag",ControlData.returnData);
                         }

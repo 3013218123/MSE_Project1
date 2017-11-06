@@ -42,7 +42,6 @@ public class Jieshou1 extends Activity {
     private Button saveCSVButton;
     private EditText saveCSVEditview;
     private List<String> strings = AppComFun.ltmp;
-    //String[] strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
     String filename = FileName.filename;
     int sonId = 1001;
     int parentId = 1;
@@ -80,24 +79,30 @@ public class Jieshou1 extends Activity {
             @Override
             public void onClick(View v) {
                 String saveCSVName=saveCSVEditview.getText().toString();
-                boolean saveResult=SaveCsv.writeAll(saveCSVName,strings,filename);
-                if(saveResult){
-                    Toast.makeText(Jieshou1.this, "保存成功！", Toast.LENGTH_LONG).show();
+                if(!saveCSVName.equals("")){
+                    boolean saveResult=SaveCsv.writeAll(saveCSVName,strings,filename);
+                    if(saveResult){
+                        Toast.makeText(Jieshou1.this, "保存成功！", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(Jieshou1.this, "保存失败！", Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(Jieshou1.this, "保存失败！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Jieshou1.this, "名字都不输？！", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
+
         handler.postDelayed(runnable, 1000 * 5);
         initDatas();
     }
 
     private void initDatas() {
-        lastLength=strings.size();
-        mDatas.clear();
+
+        //mDatas.clear();
         //循环开始
 //        for (int i = strings.size() - 1; i >= 0; i--) {
-        for (int i = 0; i <strings.size(); i++) {
+        for (int i = lastLength; i <strings.size(); i++) {
             //判断当前字符串的BO类型未出现过
             boolean isOnly = true;
 //            for (int k = strings.size() - 1; k > i; k--) {
@@ -141,7 +146,7 @@ public class Jieshou1 extends Activity {
 
 
         }
-
+        lastLength=strings.size();
         mTree = (ListView) findViewById(R.id.jieshou_1);
         try {
             mAdapter = new SimpleTreeAdapter<Bean>(mTree, this, mDatas, 0);

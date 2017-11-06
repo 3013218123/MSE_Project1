@@ -48,12 +48,15 @@ public class Jieshou extends AppCompatActivity {
 
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.jieshou);
 
         handler.postDelayed(runnable, 1000 * 5);
+
         Update();
     }
 
@@ -65,16 +68,20 @@ public class Jieshou extends AppCompatActivity {
 
 
     public void Update() {
+        if(lastLength==0){
+            radioGroup = (RadioGroup) findViewById(R.id.jieshou_r1);
+        }
+
         button = (Button) findViewById(R.id.jieshou_yibiaopan);
         button1 = (Button) findViewById(R.id.jieshou_wuli);
         btn_canlayout = (Button) findViewById(R.id.btn_can_layout);
         //strings =new String[] {"t320880478C2F05A1D29A","t31880300000000000000","t31D80200000000000000","t320880478C2F05A1D29A"};
         filename = FileName.filename;
-        radioGroup = (RadioGroup) findViewById(R.id.jieshou_r1);
-        radioGroup.removeAllViews();
+
+        //radioGroup.removeAllViews();
         //Parse.parse("t31880300000000000000",filename);
         //循环开始
-        for (int i = 0; i < strings.size(); i++) {
+        for (int i = lastLength; i < strings.size(); i++) {
             ParseData parsedate;
             parsedate = Parse.parse(strings.get(i), filename);
             Message message = parsedate.getBO_Mse();
